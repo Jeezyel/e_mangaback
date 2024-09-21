@@ -32,9 +32,9 @@ public class MunicipioServiceMPL implements MunicipioService{
     Validator validator;
 
     @Override
-    public List<MunicipiosResponceDTO> getAll() {
+    public List<MunicipiosResponceDTO> getAll(int index , int size) {
 
-        List<Municipio> list = municipioRepository.listAll();
+        List<Municipio> list = municipioRepository.findAll().page(index,size).list();
         return list.stream().map(MunicipiosResponceDTO::new).collect(Collectors.toList());
     }
 

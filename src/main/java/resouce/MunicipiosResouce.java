@@ -30,9 +30,9 @@ public class MunicipiosResouce {
 
     @GET
     @Path("/getAll")
-    public List<MunicipiosResponceDTO> getAll() {
+    public List<MunicipiosResponceDTO> getAll(@QueryParam("index") @DefaultValue("0") int index ,@QueryParam("size")  @DefaultValue("10") int size) {
         LOG.info("buscando todos os municipios." );
-        return municipioService.getAll();
+        return municipioService.getAll(index,size);
     }
 
     @POST

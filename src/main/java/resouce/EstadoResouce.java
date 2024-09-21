@@ -30,10 +30,11 @@ public class EstadoResouce {
 
     @GET
     @Path("/getAll")
-    public List<EstadoResponceDTO> getAll() {
+    public List<EstadoResponceDTO> getAll(@QueryParam("index") @DefaultValue("0") int index
+                                         ,@QueryParam("pageSize")  @DefaultValue("10") int size) {
         LOG.info("Buscando todos os estados.");
         LOG.debug("Debug de busca de lista de estados.");
-        return estadoService.getAll();
+        return estadoService.getAll(index,size);
     }
 
     @GET
