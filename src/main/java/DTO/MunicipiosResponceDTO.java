@@ -1,18 +1,18 @@
 package DTO;
 
+import model.Estado;
 import model.Municipio;
 
 public record MunicipiosResponceDTO(
         long idMunicipio,
         String nome,
-
-        long idEstado
+        String nomeEstado
 ) {
     public MunicipiosResponceDTO (Municipio municipio){
         this(
                 municipio.getId(),
                 municipio.getNome(),
-                municipio.getEstado().getId()
+                municipio.getEstado().getNome()
         );
     }
 }

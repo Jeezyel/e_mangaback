@@ -29,14 +29,15 @@ public class MunicipiosResouce {
     MunicipioService municipioService;
 
     @GET
-    @Path("/getAll")
-    public List<MunicipiosResponceDTO> getAll(@QueryParam("index") @DefaultValue("0") int index ,@QueryParam("size")  @DefaultValue("10") int size) {
+    @Path("/getall")
+    public Response getAll(@QueryParam("index") @DefaultValue("0") int index ,@QueryParam("size")  @DefaultValue("100") int size) {
         LOG.info("buscando todos os municipios." );
-        return municipioService.getAll(index,size);
+        return Response.ok(municipioService.getAll(index,size)).build();
     }
 
     @POST
     @Transactional
+    @Path("/insert")
     public Response insert(MunicipiosDTO municipioDTO) {
         LOG.info("Inserindo um municipio.");
         try {
@@ -63,7 +64,7 @@ public class MunicipiosResouce {
     }
 
     @DELETE
-    @Path("/DeleteForId/{Id}")
+    @Path("/delete/{Id}")
     @Transactional
     public void DeleteForId(@PathParam("Id") long id){
         municipioService.delete(id);

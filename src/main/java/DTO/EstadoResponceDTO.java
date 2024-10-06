@@ -6,7 +6,7 @@ import model.Estado;
 import java.util.List;
 
 public record EstadoResponceDTO(
-        Long idEstado,
+        Long id,
         String nome,
         String sigla
 ) {
@@ -17,4 +17,14 @@ public record EstadoResponceDTO(
                 estado.getSigla()
         );
     }
+
+    /*
+    modelo do professorA
+    public static EstadoResponceDTO valueOf(Estado estado) {
+        return new EstadoResponceDTO(
+                estado.getId(),
+                estado.getNome(),
+                estado.getSigla());
+    }
+     */
 }

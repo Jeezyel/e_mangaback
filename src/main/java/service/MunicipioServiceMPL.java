@@ -34,8 +34,10 @@ public class MunicipioServiceMPL implements MunicipioService{
     @Override
     public List<MunicipiosResponceDTO> getAll(int index , int size) {
 
-        List<Municipio> list = municipioRepository.findAll().page(index,size).list();
-        return list.stream().map(MunicipiosResponceDTO::new).collect(Collectors.toList());
+        //List<Municipio> list = municipioRepository.findAll().page(index,size).list();
+        //return list.stream().map(MunicipiosResponceDTO::new).collect(Collectors.toList());
+
+        return municipioRepository.listAll().stream().map(e -> new MunicipiosResponceDTO(e)).toList();
     }
 
 
