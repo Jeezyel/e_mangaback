@@ -1,6 +1,5 @@
 package resouce;
 
-
 import DTO.EstadoDTO;
 import DTO.EstadoResponceDTO;
 import aplication.Result;
@@ -23,13 +22,12 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class EstadoResouce {
 
-
     @Inject
     EstadoService estadoService;
     private static final Logger LOG = Logger.getLogger(EstadoResouce.class);
 
     @GET
-    @Path("/getall")
+    @Path("/")
     public List<EstadoResponceDTO> getAll(@QueryParam("index") @DefaultValue("0") int index
                                          ,@QueryParam("pageSize")  @DefaultValue("100") int size) {
         LOG.info("Buscando todos os estados.");
@@ -38,7 +36,7 @@ public class EstadoResouce {
     }
 
     @GET
-    @Path("/search/{id}")
+    @Path("/{id}")
     public EstadoResponceDTO findById(@PathParam("id") Long id) {
         LOG.info("Buscando ID de estados.");
         return estadoService.findById(id);
@@ -92,7 +90,7 @@ public class EstadoResouce {
 
 
     @GET
-    @Path("/search/{nome}")
+    @Path("/findByNome/{nome}")
     public List<EstadoResponceDTO> search(@PathParam("nome") String nome) {
         LOG.info("Busca nome de estados.");
         return estadoService.findByNome(nome);
