@@ -1,33 +1,36 @@
 package model;
 
-import java.util.Set;
 import jakarta.persistence.*;
-import jakarta.ws.rs.FormParam;
 
-import java.io.InputStream;
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+
 
 @Entity
 public class Manga extends DefaultEntity {
 
     private String nome;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private FormatoManga formatos;
 
 /*  @Enumerated(EnumType.STRING)
     private Set<MangaGenre> genres; QUANDO VC USAR O 'Set<> INDICA QUE VC QUER SALVAR UMA COLEÇÃO DE DADO DEQUELE ENUM'
     */
 
-    @Enumerated(EnumType.STRING)
-    private Set<MangaGenre> genres;
+    @ManyToMany
+    @JoinTable(
+            name = "manga_genero", // Nome da tabela de junção
+            joinColumns = @JoinColumn(name = "manga_id"), // Chave estrangeira para Manga
+            inverseJoinColumns = @JoinColumn(name = "genero_id") // Chave estrangeira para Genero
+    )
+     private Set<MangaGenero> generos;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private Idioma idioma;
 
     @Enumerated(EnumType.STRING)
-    private ClassificacaoIndicativa classificacao;
+    private ClassificacaoIndicativa classificacao; // o unico que vai continuar um enum
 
     public String getNome() {
         return nome;
@@ -45,20 +48,20 @@ public class Manga extends DefaultEntity {
         this.formatos = formatos;
     }
 
-    public Set<MangaGenre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(Set<MangaGenre> genres) {
-        this.genres = genres;
-    }
-
     public Idioma getIdioma() {
         return idioma;
     }
 
     public void setIdioma(Idioma idioma) {
         this.idioma = idioma;
+    }
+
+    public Set<MangaGenero> getGeneros() {
+        return generos;
+    }
+
+    public void setGeneros(Set<MangaGenero> generos) {
+        this.generos = generos;
     }
 
     public ClassificacaoIndicativa getClassificacao() {

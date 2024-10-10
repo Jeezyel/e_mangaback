@@ -1,42 +1,25 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Entity;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum Idioma {
-    PORTUGUES(1, "Português"),
-    INGLES(2, "Inglês"),
-    ESPANHOL(3, "Espanhol"),
-    JAPONES(4, "Japonês"),
-    FRANCES(5, "Francês"),
-    ALEMAO(6, "Alemão"),
-    ITALIANO(7, "Italiano"),
-    COREANO(8, "Coreano"),
-    CHINES(9, "Chinês");
+@Entity
+public class Idioma extends DefaultEntity{
+    private String idioma;
+    private String Sigla;
 
-    private int id;
-    private String label;
-
-    Idioma(int id, String label) {
-        this.id = id;
-        this.label = label;
+    public String getIdioma() {
+        return idioma;
     }
 
-    public int getId() {
-        return id;
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
     }
 
-    public String getLabel() {
-        return label;
+    public String getSigla() {
+        return Sigla;
     }
 
-    public static Idioma valueOf(Integer id) throws IllegalArgumentException {
-        if (id == null)
-            return null;
-        for (Idioma idioma : Idioma.values()) {
-            if (id.equals(idioma.getId()))
-                return idioma;
-        }
-        throw new IllegalArgumentException("Id inválido: " + id);
+    public void setSigla(String sigla) {
+        Sigla = sigla;
     }
 }
