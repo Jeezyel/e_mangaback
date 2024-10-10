@@ -33,9 +33,9 @@ public class EnderecoResouce {
 
     @GET
     @Path("/search/{id}")
-    public EnderecoResponceDTO findById(@PathParam("id") Long id) {
+    public Response findById(@PathParam("id") Long id) {
         LOG.info("Buscando ID de estados.");
-        return enderecoService.findById(id);
+        return Response.ok(enderecoService.findById(id)).build();
     }
 
     @POST

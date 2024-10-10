@@ -118,7 +118,17 @@ public class EnderecoServiceMPL implements EnderecoService{
 
     @Override
     public EnderecoResponceDTO findById(long id) {
-        return new EnderecoResponceDTO(enderecoRepository.findById(id));
+        Endereco endereco = enderecoRepository.findById(id);
+
+        if (endereco == null) {
+
+            LOG.info("nao esta encontrando o endereco");
+            return null;
+        }else {
+            LOG.info("encontro o endereco");
+            return new EnderecoResponceDTO(endereco);
+        }
+
     }
 
     @Override

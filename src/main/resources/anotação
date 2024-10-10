@@ -1,5 +1,7 @@
-// Para corrigir a pasta maven: 
-// mvn -N io.takari:maven:wrapper
+Para corrigir a pasta maven:
+mvn -N io.takari:maven:wrapper
+
+
 
 
 

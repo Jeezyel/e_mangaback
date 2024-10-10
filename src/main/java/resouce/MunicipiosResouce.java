@@ -4,7 +4,6 @@ package resouce;
 import DTO.MunicipiosDTO;
 import DTO.MunicipiosResponceDTO;
 import aplication.Result;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.*;
