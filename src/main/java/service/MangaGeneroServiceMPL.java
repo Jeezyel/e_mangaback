@@ -1,7 +1,5 @@
 package service;
 
-import DTO.IdiomaDTO;
-import DTO.IdiomaResposceDTO;
 import DTO.MangaGeneroDTO;
 import DTO.MangaGeneroResponceDTO;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -9,7 +7,6 @@ import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
-import model.Idioma;
 import model.MangaGenero;
 import repository.MangaGeneroRepository;
 

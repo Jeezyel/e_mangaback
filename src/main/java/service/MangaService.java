@@ -2,9 +2,11 @@ package service;
 
 import DTO.MangaDTO;
 import DTO.MangaResponceDTO;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
+@ApplicationScoped
 public interface MangaService {
     List<MangaResponceDTO> getAll(int page , int size);
 

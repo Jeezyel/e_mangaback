@@ -2,9 +2,11 @@ package service;
 
 import DTO.FormatoDTO;
 import DTO.FormatoResponceDTO;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
+@ApplicationScoped
 public interface FormatoService {
     List<FormatoResponceDTO> getAll(int page , int size);
 

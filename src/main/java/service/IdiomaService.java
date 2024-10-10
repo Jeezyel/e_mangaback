@@ -2,9 +2,11 @@ package service;
 
 import DTO.IdiomaDTO;
 import DTO.IdiomaResposceDTO;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
+@ApplicationScoped
 public interface IdiomaService {
     List<IdiomaResposceDTO> getAll(int page , int size);
 

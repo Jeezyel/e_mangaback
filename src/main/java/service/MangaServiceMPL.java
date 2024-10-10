@@ -2,6 +2,7 @@ package service;
 
 import DTO.MangaDTO;
 import DTO.MangaResponceDTO;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Validator;
 import jakarta.validation.ConstraintViolation;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@ApplicationScoped
 public class MangaServiceMPL implements MangaService {
 
     @Inject
