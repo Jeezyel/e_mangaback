@@ -1,3 +1,7 @@
+
+CORRIGIR A PASTA MAVEN: mvn -N io.takari:maven:wrapper
+
+Nicole: Utilizando a JDK 21.0.4 e Apache Maven 3.9.9
 Para corrigir a pasta maven:
 mvn -N io.takari:maven:wrapper
 

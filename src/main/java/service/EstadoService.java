@@ -3,15 +3,14 @@ package service;
 import DTO.EstadoDTO;
 import DTO.EstadoResponceDTO;
 import jakarta.enterprise.context.ApplicationScoped;
-
 import java.util.List;
 
 @ApplicationScoped
 public interface EstadoService {
 
     // recursos basicos
-    List<EstadoResponceDTO> getAll(int index , int size);
 
+    List<EstadoResponceDTO> getAll(int index , int size);
 
     EstadoResponceDTO create(EstadoDTO estadosDTO);
 
@@ -26,4 +25,5 @@ public interface EstadoService {
     EstadoResponceDTO findById(long id);
 
     long count();
+
 }
