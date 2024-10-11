@@ -25,7 +25,7 @@ public class IdiomaResouce {
     IdiomaService idiomaService;
 
     @GET
-    @Path("/getall")
+    @Path("/")
     public Response getAll(@QueryParam("index") @DefaultValue("0") int page , @QueryParam("size")  @DefaultValue("100") int size) {
         return Response.ok(idiomaService.getAll(page, size)).build();
     }
@@ -73,7 +73,7 @@ public class IdiomaResouce {
     }
 
     @GET
-    @Path("/search/{idioma}")
+    @Path("/findByIdioma/{idioma}")
     public List<IdiomaResposceDTO> search(@PathParam("idioma") String idioma){
         return idiomaService.findByIdioma(idioma);
 
