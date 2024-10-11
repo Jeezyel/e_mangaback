@@ -26,7 +26,7 @@ public class FormatoResouce {
     FormatoService formatoService;
 
     @GET
-    @Path("/getall")
+    @Path("/")
     public Response getAll(@QueryParam("index") @DefaultValue("0") int page , @QueryParam("size")  @DefaultValue("100") int size) {
         return Response.ok(formatoService.getAll(page, size)).build();
     }
@@ -74,7 +74,7 @@ public class FormatoResouce {
     }
 
     @GET
-    @Path("/search/{formato}")
+    @Path("/findByFormato/{formato}")
     public List<FormatoResponceDTO> search(@PathParam("formato") String formato){
         return formatoService.findByFormato(formato);
 
