@@ -24,13 +24,13 @@ public class EditoraResouce {
     private static final Logger LOG = Logger.getLogger(EditoraResouce.class);
 
     @GET
-    @Path("/getAll")
+    @Path("/")
     public List<EditoraResponceDTO> getAll() {
         return editoraService.getAll();
     }
 
     @GET
-    @Path("/search/{id}")
+    @Path("/{id}")
     public EditoraResponceDTO findById(@PathParam("id") Long id) {
         return editoraService.findById(id);
     }
@@ -50,7 +50,7 @@ public class EditoraResouce {
     }
 
     @DELETE
-    @Path("/DeleteForId/{Id}")
+    @Path("/delete/{Id}")
     @Transactional
     public void DeleteForId(@PathParam("Id") long id){
         editoraService.delete(id);
