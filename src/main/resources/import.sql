@@ -138,7 +138,7 @@ INSERT INTO public.editora(nome, cnpj, telefone) VALUES
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-INSERT INTO public.formato(formato) VALUES
+INSERT INTO public.formatoManga(formato) VALUES
 ('Tankobon'),
 ('Bunkobon'),
 ('Digital'),
