@@ -28,7 +28,7 @@ public class MunicipiosResouce {
     MunicipioService municipioService;
 
     @GET
-    @Path("/getall")
+    @Path("/")
     public Response getAll(@QueryParam("index") @DefaultValue("0") int index ,@QueryParam("size")  @DefaultValue("100") int size) {
         LOG.info("buscando todos os municipios." );
         return Response.ok(municipioService.getAll(index,size)).build();
@@ -77,7 +77,7 @@ public class MunicipiosResouce {
     }
 
     @GET
-    @Path("/search/{nome}")
+    @Path("/findByNome/{nome}")
     public List<MunicipiosResponceDTO> search(@PathParam("nome") String nome){
         return municipioService.findByNome(nome);
 
