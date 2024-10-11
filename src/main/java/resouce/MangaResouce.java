@@ -17,7 +17,7 @@ import service.MangaService;
 
 import java.util.List;
 
-@Path("/manga")
+@Path("/mangas")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class MangaResouce {

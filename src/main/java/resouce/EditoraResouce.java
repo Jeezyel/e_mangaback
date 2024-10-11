@@ -15,7 +15,7 @@ import service.EditoraService;
 
 import java.util.List;
 
-@Path("/editora")
+@Path("/editoras")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class EditoraResouce {

@@ -7,7 +7,7 @@ public record EditoraResponceDTO(
         long idEditora,
         String cnpj,
         String nome,
-        String Telefone
+        String telefone
 ) {
     public EditoraResponceDTO(Editora editora){
         this(

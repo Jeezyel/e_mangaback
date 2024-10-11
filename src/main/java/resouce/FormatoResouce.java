@@ -16,7 +16,7 @@ import service.FormatoService;
 
 import java.util.List;
 
-@Path("/formato")
+@Path("/formatos")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class FormatoResouce {

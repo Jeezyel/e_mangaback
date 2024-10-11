@@ -15,7 +15,7 @@ import service.IdiomaService;
 
 import java.util.List;
 
-@Path("/idioma")
+@Path("/idiomas")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class IdiomaResouce {

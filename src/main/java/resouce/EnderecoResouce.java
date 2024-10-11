@@ -15,7 +15,7 @@ import service.EnderecoService;
 
 import java.util.List;
 
-@Path("/endereco")
+@Path("/enderecos")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class EnderecoResouce {

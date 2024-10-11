@@ -9,6 +9,6 @@ public record EditoraDTO(
         @NotBlank(message = "o nome deve ser informdo ")
         String nome,
         @NotBlank(message = "o Telefone deve ser informdo ")
-        String Telefone
+        String telefone
 ) {
 }

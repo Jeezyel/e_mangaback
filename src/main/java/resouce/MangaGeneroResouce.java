@@ -16,7 +16,7 @@ import service.MangaGeneroService;
 
 import java.util.List;
 
-@Path("/genero")
+@Path("/generos")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class MangaGeneroResouce {
