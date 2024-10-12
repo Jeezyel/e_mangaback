@@ -26,7 +26,7 @@ public class MangaGeneroServiceMPL implements MangaGeneroService {
     @Override
     public List<MangaGeneroResponceDTO> getAll(int page, int size) {
         List<MangaGenero> list = mangaGeneroRepository.findAll().page(page,size).list();
-        return list.stream().map(MangaGeneroResponceDTO::valueOf).collect(Collectors.toList());
+        return list.stream().map(MangaGeneroResponceDTO::new).collect(Collectors.toList());
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MangaGeneroServiceMPL implements MangaGeneroService {
 
         mangaGeneroRepository.persist(entity);
 
-        return MangaGeneroResponceDTO.valueOf(entity);
+        return new MangaGeneroResponceDTO(entity);
     }
 
     @Override
@@ -48,15 +48,11 @@ public class MangaGeneroServiceMPL implements MangaGeneroService {
 
         MangaGenero entity = mangaGeneroRepository.findById(id);
 
-        if (entity == null) {
-            return null;
-        }
-
         entity.setGenero(mangaGeneroDTO.genero());
 
         mangaGeneroRepository.persist(entity);
 
-        return MangaGeneroResponceDTO.valueOf(entity);
+        return new MangaGeneroResponceDTO(entity);
     }
 
     @Override
@@ -67,12 +63,12 @@ public class MangaGeneroServiceMPL implements MangaGeneroService {
     @Override
     public List<MangaGeneroResponceDTO> findByGenero(String genero) {
         List<MangaGenero> list = mangaGeneroRepository.findByListGenero(genero);
-        return list.stream().map(MangaGeneroResponceDTO::valueOf).collect(Collectors.toList());
+        return list.stream().map(MangaGeneroResponceDTO::new).collect(Collectors.toList());
     }
 
     @Override
     public MangaGeneroResponceDTO findById(long id) {
-        return MangaGeneroResponceDTO.valueOf(mangaGeneroRepository.findById(id));
+        return new MangaGeneroResponceDTO(mangaGeneroRepository.findById(id));
     }
 
     @Override

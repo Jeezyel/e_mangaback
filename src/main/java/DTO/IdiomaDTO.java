@@ -4,9 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 
 public record IdiomaDTO(
         @NotBlank(message = "O campo Idioma deve ser informado.")
-        String Idioma,
+        String idiomas,
         @NotBlank(message = "O campo Sigla deve ser informado.")
-        String Sigla
+        String sigla
 
 
         ) {

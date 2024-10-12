@@ -8,11 +8,18 @@ public record MangaGeneroResponceDTO(
 
         String genero
 ) {
-        public static MangaGeneroResponceDTO valueOf(MangaGenero mangaGenero) {
+
+        public MangaGeneroResponceDTO(MangaGenero mangaGenero) {
+                this(
+                        mangaGenero.getId(),
+                        mangaGenero.getGenero()
+                );
+        }
+       /* public static MangaGeneroResponceDTO valueOf(MangaGenero mangaGenero) {
 
                 return new MangaGeneroResponceDTO(
                         mangaGenero.getId(),
                         mangaGenero.getGenero()
                 );
-        }
+        }*/
 }

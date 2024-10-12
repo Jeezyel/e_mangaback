@@ -45,7 +45,7 @@ public class EditoraServiceMPL implements EditoraService{
 
         entity.setCnpj(editoraDTO.cnpj());
         entity.setNome(editoraDTO.nome());
-        entity.setTelefone(editoraDTO.Telefone());
+        entity.setTelefone(editoraDTO.telefone());
 
 
         editoraRepository.persist(entity);
@@ -63,7 +63,7 @@ public class EditoraServiceMPL implements EditoraService{
 
         entity.setCnpj(editoraDTO.cnpj());
         entity.setNome(editoraDTO.nome());
-        entity.setTelefone(editoraDTO.Telefone());
+        entity.setTelefone(editoraDTO.telefone());
 
 
         editoraRepository.persist(entity);

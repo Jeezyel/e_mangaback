@@ -1,33 +1,31 @@
-
-	INSERT INTO public.estado (nome, sigla) VALUES
-    ('Acre', 'AC'),
-    ('Alagoas', 'AL'),
-    ('Amapá', 'AP'),
-    ('Amazonas', 'AM'),
-    ('Bahia', 'BA'),
-    ('Ceará', 'CE'),
-    ('Distrito Federal', 'DF'),
-    ('Espírito Santo', 'ES'),
-    ('Goiás', 'GO'),
-    ('Maranhão', 'MA'),
-    ('Mato Grosso', 'MT'),
-    ('Mato Grosso do Sul', 'MS'),
-    ('Minas Gerais', 'MG'),
-    ('Pará', 'PA'),
-    ('Paraíba', 'PB'),
-    ('Paraná', 'PR'),
-    ('Pernambuco', 'PE'),
-    ('Piauí', 'PI'),
-    ('Rio de Janeiro', 'RJ'),
-    ('Rio Grande do Norte', 'RN'),
-    ('Rio Grande do Sul', 'RS'),
-    ('Rondônia', 'RO'),
-    ('Roraima', 'RR'),
-    ('Santa Catarina', 'SC'),
-    ('São Paulo', 'SP'),
-    ('Sergipe', 'SE'),
-    ('Tocantins', 'TO');
-
+INSERT INTO public.estado (nome, sigla) VALUES
+                                            ('Acre', 'AC'),
+                                            ('Alagoas', 'AL'),
+                                            ('Amapá', 'AP'),
+                                            ('Amazonas', 'AM'),
+                                            ('Bahia', 'BA'),
+                                            ('Ceará', 'CE'),
+                                            ('Distrito Federal', 'DF'),
+                                            ('Espírito Santo', 'ES'),
+                                            ('Goiás', 'GO'),
+                                            ('Maranhão', 'MA'),
+                                            ('Mato Grosso', 'MT'),
+                                            ('Mato Grosso do Sul', 'MS'),
+                                            ('Minas Gerais', 'MG'),
+                                            ('Pará', 'PA'),
+                                            ('Paraíba', 'PB'),
+                                            ('Paraná', 'PR'),
+                                            ('Pernambuco', 'PE'),
+                                            ('Piauí', 'PI'),
+                                            ('Rio de Janeiro', 'RJ'),
+                                            ('Rio Grande do Norte', 'RN'),
+                                            ('Rio Grande do Sul', 'RS'),
+                                            ('Rondônia', 'RO'),
+                                            ('Roraima', 'RR'),
+                                            ('Santa Catarina', 'SC'),
+                                            ('São Paulo', 'SP'),
+                                            ('Sergipe', 'SE'),
+                                            ('Tocantins', 'TO');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -112,15 +110,52 @@ INSERT INTO public.municipio (nome, id_estado) VALUES
 ('Palmas', 27),
 ('Araguaína', 27);
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+INSERT INTO public.endereco(municipio_id, bairro, cep, complemento, logradouro) VALUES 
+( 5 , 'plano diretor sul', '77000000', 'perto da cula', 'TO'),
+( 5 , 'no meio da cidade', '20010000', 'perto do tiroteio', 'RJ'),
+( 5 , 'bairro central', '72800000', 'perto do meio', 'GO');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-INSERT INTO public.endereco(
-	 municipio_id, bairro, cep, complemento, logradouro)
-	VALUES ( 5 , 'plano diretor sul', '77000000', 'perto da cula', 'TO'),
-            ( 5 , 'no meio da cidade', '20010000', 'perto do tiroteio', 'RJ'),
-            ( 5 , 'bairro central', '72800000', 'perto do meio', 'GO');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+INSERT INTO public.editora(nome, cnpj, telefone) VALUES
+('Shueisha', '12.345.678/0001-99', '1133224455'),
+('Kodansha', '23.456.789/0001-88', '1122334455'),
+('Shogakukan', '34.567.890/0001-77', '1144556677'),
+('Kadokawa', '45.678.901/0001-66', '1166778899'),
+('Square Enix', '56.789.012/0001-55', '1188990011'),
+('Hakusensha', '67.890.123/0001-44', '1122445577'),
+('Futabasha', '78.901.234/0001-33', '1199887766'),
+('Akita Shoten', '89.012.345/0001-22', '1133445566'),
+('Media Factory', '90.123.456/0001-11', '1177889900'),
+('Tokyopop', '01.234.567/0001-00', '1144778899');
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+INSERT INTO public.formatoManga(formato) VALUES
+('Tankobon'),
+('Bunkobon'),
+('Digital'),
+('Volume'),
+('One-shot');
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+INSERT INTO public.idioma(idioma, sigla) VALUES
+('Português', 'PT'),
+('Inglês', 'EN'),
+('Espanhol', 'ES'),
+('Japonês', 'JA'),
+('Francês', 'FR'),
+('Alemão', 'DE'),
+('Italiano', 'IT'),
+('Chinês', 'ZH'),
+('Coreano', 'KO'),
+('Russo', 'RU');
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////

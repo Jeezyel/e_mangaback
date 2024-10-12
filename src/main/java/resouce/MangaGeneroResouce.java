@@ -1,7 +1,5 @@
 package resouce;
 
-import DTO.IdiomaDTO;
-import DTO.IdiomaResposceDTO;
 import DTO.MangaGeneroDTO;
 import DTO.MangaGeneroResponceDTO;
 import aplication.Result;
@@ -13,6 +11,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 import service.MangaGeneroService;
+
+import jakarta.ws.rs.core.Response.Status;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class MangaGeneroResouce {
     MangaGeneroService mangaGeneroService;
 
     @GET
-    @Path("/getall")
+    @Path("/")
     public Response getAll(@QueryParam("index") @DefaultValue("0") int page , @QueryParam("size")  @DefaultValue("100") int size) {
         return Response.ok(mangaGeneroService.getAll(page, size)).build();
     }
@@ -51,11 +51,12 @@ public class MangaGeneroResouce {
     @Transactional
     public Response update(@PathParam("id") Long id, MangaGeneroDTO mangaGeneroDTO) {
         try {
-            MangaGeneroResponceDTO genero = mangaGeneroService.update(id, mangaGeneroDTO);
-            return Response.ok(genero).build();
-        } catch(ConstraintViolationException e) {
+            mangaGeneroService.update(id, mangaGeneroDTO);
+            return Response.status(Status.NO_CONTENT).build();
+        } catch (ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
-            return Response.status(Response.Status.NOT_FOUND).entity(result).build();
+            LOG.debug("Debug de updat de estados.");
+            return Response.status(Status.NOT_FOUND).entity(result).build();
         }
     }
 
