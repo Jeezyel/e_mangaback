@@ -69,6 +69,12 @@ public class MunicipiosResouce {
         municipioService.delete(id);
     }
 
+    @GET
+    @Path("/{Id}")
+    @Transactional
+    public Response GetForId(@PathParam("Id") long id){
+        return Response.ok(municipioService.findById(id)).build();
+    }
 
     @GET
     @Path("/count")

@@ -1,6 +1,7 @@
 package service;
 
 
+import DTO.FormatoResponceDTO;
 import DTO.MunicipiosDTO;
 import DTO.MunicipiosResponceDTO;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -81,6 +82,11 @@ public class MunicipioServiceMPL implements MunicipioService{
     public List<MunicipiosResponceDTO> findByNome(String nome) {
         List<Municipio> list = municipioRepository.findByNome(nome);
         return list.stream().map(MunicipiosResponceDTO::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public MunicipiosResponceDTO findById(long id) {
+        return new MunicipiosResponceDTO(municipioRepository.findById(id));
     }
 
     @Override

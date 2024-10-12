@@ -1,5 +1,6 @@
 package service;
 
+import DTO.FormatoResponceDTO;
 import DTO.MunicipiosDTO;
 import DTO.MunicipiosResponceDTO;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -22,6 +23,8 @@ public interface MunicipioService {
     // recursos extras
 
     List<MunicipiosResponceDTO> findByNome(String nome);
+
+    MunicipiosResponceDTO findById(long id);
 
     long count();
 }

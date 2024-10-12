@@ -66,6 +66,12 @@ public class FormatoResouce {
         formatoService.delete(id);
     }
 
+    @GET
+    @Path("/{Id}")
+    @Transactional
+    public Response GetForId(@PathParam("Id") long id){
+        return Response.ok(formatoService.findById(id)).build();
+    }
 
     @GET
     @Path("/count")
