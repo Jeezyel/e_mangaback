@@ -6,9 +6,9 @@ import model.Idioma;
 public record IdiomaResposceDTO(
         long idIdioma,
 
-        String Idioma,
+        String idioma,
 
-        String Sigla
+        String sigla
 
 
         ) {

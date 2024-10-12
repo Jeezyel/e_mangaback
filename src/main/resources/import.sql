@@ -148,10 +148,15 @@ INSERT INTO public.formatoManga(formato) VALUES
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 INSERT INTO public.idioma(idioma, sigla) VALUES
-('Tankobon'),
-('Bunkobon'),
-('Digital'),
-('Volume'),
-('One-shot');
+('Português', 'PT'),
+('Inglês', 'EN'),
+('Espanhol', 'ES'),
+('Japonês', 'JA'),
+('Francês', 'FR'),
+('Alemão', 'DE'),
+('Italiano', 'IT'),
+('Chinês', 'ZH'),
+('Coreano', 'KO'),
+('Russo', 'RU');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

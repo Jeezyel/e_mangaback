@@ -36,8 +36,8 @@ public class IdiomaServiceMPL implements IdiomaService {
 
         Idioma entity = new Idioma();
 
-        entity.setIdioma(idiomaDTO.Idioma());
-        entity.setSigla(idiomaDTO.Sigla());
+        entity.setIdioma(idiomaDTO.idioma());
+        entity.setSigla(idiomaDTO.sigla());
 
         idiomaRepository.persist(entity);
 
@@ -54,8 +54,8 @@ public class IdiomaServiceMPL implements IdiomaService {
             return null;
         }
 
-        entity.setIdioma(idiomaDTO.Idioma());
-        entity.setSigla(idiomaDTO.Sigla());
+        entity.setIdioma(idiomaDTO.idioma());
+        entity.setSigla(idiomaDTO.sigla());
 
         idiomaRepository.persist(entity);
 
