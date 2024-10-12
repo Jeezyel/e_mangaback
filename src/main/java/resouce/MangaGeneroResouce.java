@@ -70,8 +70,8 @@ public class MangaGeneroResouce {
     @GET
     @Path("/{Id}")
     @Transactional
-    public void GetForId(@PathParam("Id") long id){
-        mangaGeneroService.findById(id);
+    public Response GetForId(@PathParam("Id") long id){
+        return Response.ok(mangaGeneroService.findById(id)).build();
     }
 
 

@@ -65,6 +65,12 @@ public class IdiomaResouce {
         idiomaService.delete(id);
     }
 
+    @GET
+    @Path("/{Id}")
+    @Transactional
+    public Response GetForId(@PathParam("Id") long id){
+        return Response.ok(idiomaService.findById(id)).build();
+    }
 
     @GET
     @Path("/count")
