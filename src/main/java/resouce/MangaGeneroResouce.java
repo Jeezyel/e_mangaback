@@ -67,6 +67,13 @@ public class MangaGeneroResouce {
         mangaGeneroService.delete(id);
     }
 
+    @GET
+    @Path("/{Id}")
+    @Transactional
+    public void GetForId(@PathParam("Id") long id){
+        mangaGeneroService.findById(id);
+    }
+
 
     @GET
     @Path("/count")
