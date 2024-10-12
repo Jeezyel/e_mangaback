@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 @Entity
 public class Idioma extends DefaultEntity{
     private String idioma;
-    private String Sigla;
+    private String sigla;
 
     public String getIdioma() {
         return idioma;
@@ -16,10 +16,10 @@ public class Idioma extends DefaultEntity{
     }
 
     public String getSigla() {
-        return Sigla;
+        return sigla;
     }
 
     public void setSigla(String sigla) {
-        Sigla = sigla;
+        this.sigla = sigla;
     }
 }

@@ -6,7 +6,7 @@ import model.Idioma;
 public record IdiomaResposceDTO(
         long idIdioma,
 
-        String idiomas,
+        String idioma,
 
         String sigla
 

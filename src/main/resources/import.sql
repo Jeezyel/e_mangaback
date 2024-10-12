@@ -1,31 +1,33 @@
+
 INSERT INTO public.estado (nome, sigla) VALUES
-                                            ('Acre', 'AC'),
-                                            ('Alagoas', 'AL'),
-                                            ('Amapá', 'AP'),
-                                            ('Amazonas', 'AM'),
-                                            ('Bahia', 'BA'),
-                                            ('Ceará', 'CE'),
-                                            ('Distrito Federal', 'DF'),
-                                            ('Espírito Santo', 'ES'),
-                                            ('Goiás', 'GO'),
-                                            ('Maranhão', 'MA'),
-                                            ('Mato Grosso', 'MT'),
-                                            ('Mato Grosso do Sul', 'MS'),
-                                            ('Minas Gerais', 'MG'),
-                                            ('Pará', 'PA'),
-                                            ('Paraíba', 'PB'),
-                                            ('Paraná', 'PR'),
-                                            ('Pernambuco', 'PE'),
-                                            ('Piauí', 'PI'),
-                                            ('Rio de Janeiro', 'RJ'),
-                                            ('Rio Grande do Norte', 'RN'),
-                                            ('Rio Grande do Sul', 'RS'),
-                                            ('Rondônia', 'RO'),
-                                            ('Roraima', 'RR'),
-                                            ('Santa Catarina', 'SC'),
-                                            ('São Paulo', 'SP'),
-                                            ('Sergipe', 'SE'),
-                                            ('Tocantins', 'TO');
+('Acre', 'AC'),
+('Alagoas', 'AL'),
+('Amapá', 'AP'),
+('Amazonas', 'AM'),
+('Bahia', 'BA'),
+('Ceará', 'CE'),
+('Distrito Federal', 'DF'),
+('Espírito Santo', 'ES'),
+('Goiás', 'GO'),
+('Maranhão', 'MA'),
+('Mato Grosso', 'MT'),
+('Mato Grosso do Sul', 'MS'),
+('Minas Gerais', 'MG'),
+('Pará', 'PA'),
+('Paraíba', 'PB'),
+('Paraná', 'PR'),
+('Pernambuco', 'PE'),
+('Piauí', 'PI'),
+('Rio de Janeiro', 'RJ'),
+('Rio Grande do Norte', 'RN'),
+('Rio Grande do Sul', 'RS'),
+('Rondônia', 'RO'),
+('Roraima', 'RR'),
+('Santa Catarina', 'SC'),
+('São Paulo', 'SP'),
+('Sergipe', 'SE'),
+('Tocantins', 'TO');
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -110,9 +112,10 @@ INSERT INTO public.municipio (nome, id_estado) VALUES
 ('Palmas', 27),
 ('Araguaína', 27);
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-INSERT INTO public.endereco(municipio_id, bairro, cep, complemento, logradouro) VALUES 
+INSERT INTO public.endereco(municipio_id, bairro, cep, complemento, logradouro) VALUES
 ( 5 , 'plano diretor sul', '77000000', 'perto da cula', 'TO'),
 ( 5 , 'no meio da cidade', '20010000', 'perto do tiroteio', 'RJ'),
 ( 5 , 'bairro central', '72800000', 'perto do meio', 'GO');
@@ -159,3 +162,4 @@ INSERT INTO public.idioma(idioma, sigla) VALUES
 ('Russo', 'RU');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
