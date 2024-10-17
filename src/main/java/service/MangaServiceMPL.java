@@ -38,8 +38,8 @@ public class MangaServiceMPL implements MangaService {
         Manga entity = new Manga();
 
         entity.setNome(mangaDTO.nome());
-        entity.setFormatos(mangaDTO.FormatoManga());
-        entity.setGeneros(mangaDTO.MangaGeneros());
+        entity.setFormatos(mangaDTO.formatoManga());
+        entity.setGeneros(mangaDTO.mangaGeneros());
         entity.setIdioma(mangaDTO.idioma());
         entity.setClassificacao(mangaDTO.classificacao());
 
@@ -59,8 +59,8 @@ public class MangaServiceMPL implements MangaService {
         entity = mangaRepository.findById(id);
 
         entity.setNome(mangaDTO.nome());
-        entity.setFormatos(mangaDTO.FormatoManga());
-        entity.setGeneros(mangaDTO.MangaGeneros());
+        entity.setFormatos(mangaDTO.formatoManga());
+        entity.setGeneros(mangaDTO.mangaGeneros());
         entity.setIdioma(mangaDTO.idioma());
         entity.setClassificacao(mangaDTO.classificacao());
 

@@ -13,10 +13,10 @@ public record MangaDTO(
         String nome,
 
         @NotBlank(message = "O campo Formato do Manga deve ser informado.")
-        FormatoManga FormatoManga,
+        FormatoManga formatoManga,
 
         @NotBlank(message = "O campo MangaGenero deve ser informado.")
-        Set<MangaGenero> MangaGeneros,
+        Set<MangaGenero> mangaGeneros,
 
         @NotBlank(message = "O campo idioma deve ser informado.")
         Idioma idioma,

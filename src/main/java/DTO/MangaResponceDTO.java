@@ -9,9 +9,9 @@ public record MangaResponceDTO(
 
         String nome,
 
-        FormatoManga FormatoManga,
+        FormatoManga formatoManga,
 
-        Set<MangaGenero> MangaGenero,
+        Set<MangaGenero> mangaGenero,
 
         Idioma idioma,
 
