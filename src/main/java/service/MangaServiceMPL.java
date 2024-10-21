@@ -1,12 +1,15 @@
 package service;
 
+import DTO.EditoraResponceDTO;
 import DTO.MangaDTO;
 import DTO.MangaResponceDTO;
+import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Validator;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import model.Editora;
 import model.Manga;
 import repository.MangaRepository;
 
@@ -88,6 +91,19 @@ public class MangaServiceMPL implements MangaService {
     @Override
     public long count() {
         return mangaRepository.count();
+    }
+
+    @Override
+    public List<MangaResponceDTO> search(int page, int size, String nome) {
+        List<Manga> list = mangaRepository.findByNomePanche(nome).page(page,size).list();
+        return list.stream().map(MangaResponceDTO::valueOf).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MangaResponceDTO> search() {
+        List<Manga> list = mangaRepository.findAll(Sort.by("nome")).list();
+
+        return list.stream().map(MangaResponceDTO::valueOf).toList();
     }
 
     private void validar(MangaDTO mangaDTO) throws ConstraintViolationException {

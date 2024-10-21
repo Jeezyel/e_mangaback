@@ -31,6 +31,24 @@ public class FormatoResouce {
         return Response.ok(formatoService.getAll(page, size)).build();
     }
 
+    //para crar a tela com os manga
+    //retorna tudo sem ordenação com paginação
+    @GET
+    @Path("/search/{formato}")
+    public Response search(@QueryParam("index") @DefaultValue("0") int page,
+                           @QueryParam("size")  @DefaultValue("100") int size,
+                           @PathParam("formato") String formato) {
+        return Response.ok(formatoService.search(page, size, formato)).build();
+    }
+
+    // para o campo de busca
+    //retorna tudo so que ordenado por nome
+    @GET
+    @Path("/search")
+    public Response search() {
+        return Response.ok(formatoService.search()).build();
+    }
+
     @POST
     @Transactional
     @Path("/insert")

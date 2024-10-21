@@ -2,11 +2,14 @@ package service;
 
 import DTO.MangaGeneroDTO;
 import DTO.MangaGeneroResponceDTO;
+import DTO.MangaResponceDTO;
+import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
+import model.Manga;
 import model.MangaGenero;
 import repository.MangaGeneroRepository;
 
@@ -26,7 +29,7 @@ public class MangaGeneroServiceMPL implements MangaGeneroService {
     @Override
     public List<MangaGeneroResponceDTO> getAll(int page, int size) {
         List<MangaGenero> list = mangaGeneroRepository.findAll().page(page,size).list();
-        return list.stream().map(MangaGeneroResponceDTO::new).collect(Collectors.toList());
+        return list.stream().map(MangaGeneroResponceDTO::valueOf).collect(Collectors.toList());
     }
 
     @Override
@@ -39,7 +42,7 @@ public class MangaGeneroServiceMPL implements MangaGeneroService {
 
         mangaGeneroRepository.persist(entity);
 
-        return new MangaGeneroResponceDTO(entity);
+        return MangaGeneroResponceDTO.valueOf(entity);
     }
 
     @Override
@@ -52,7 +55,7 @@ public class MangaGeneroServiceMPL implements MangaGeneroService {
 
         mangaGeneroRepository.persist(entity);
 
-        return new MangaGeneroResponceDTO(entity);
+        return MangaGeneroResponceDTO.valueOf(entity);
     }
 
     @Override
@@ -63,17 +66,30 @@ public class MangaGeneroServiceMPL implements MangaGeneroService {
     @Override
     public List<MangaGeneroResponceDTO> findByGenero(String genero) {
         List<MangaGenero> list = mangaGeneroRepository.findByListGenero(genero);
-        return list.stream().map(MangaGeneroResponceDTO::new).collect(Collectors.toList());
+        return list.stream().map(MangaGeneroResponceDTO::valueOf).collect(Collectors.toList());
     }
 
     @Override
     public MangaGeneroResponceDTO findById(long id) {
-        return new MangaGeneroResponceDTO(mangaGeneroRepository.findById(id));
+        return MangaGeneroResponceDTO.valueOf(mangaGeneroRepository.findById(id));
     }
 
     @Override
     public long count() {
         return mangaGeneroRepository.count();
+    }
+
+    @Override
+    public List<MangaGeneroResponceDTO> search(int page, int size, String genero) {
+        List<MangaGenero> list = mangaGeneroRepository.findByGeneroPanache(genero).page(page,size).list();
+        return list.stream().map(MangaGeneroResponceDTO::valueOf).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MangaGeneroResponceDTO> search() {
+        List<MangaGenero> list = mangaGeneroRepository.findAll(Sort.by("nome")).list();
+
+        return list.stream().map(MangaGeneroResponceDTO::valueOf).toList();
     }
 
     private void validar(MangaGeneroDTO mangaGeneroDTO) throws ConstraintViolationException {
@@ -82,3 +98,4 @@ public class MangaGeneroServiceMPL implements MangaGeneroService {
             throw new ConstraintViolationException(violations);
     }
 }
+//

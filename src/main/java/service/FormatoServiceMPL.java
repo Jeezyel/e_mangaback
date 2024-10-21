@@ -4,6 +4,7 @@ import DTO.FormatoDTO;
 import DTO.FormatoResponceDTO;
 import DTO.MangaDTO;
 import DTO.MangaResponceDTO;
+import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
@@ -82,6 +83,20 @@ public class FormatoServiceMPL implements FormatoService {
     @Override
     public long count() {
         return formatoRepository.count();
+    }
+
+    @Override
+    public List<FormatoResponceDTO> search(int page, int size, String formato) {
+
+        List<FormatoManga> list = formatoRepository.findByFormatoPanache(formato).page(page,size).list();
+        return list.stream().map(FormatoResponceDTO::valueOf).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FormatoResponceDTO> search() {
+        List<FormatoManga> list = formatoRepository.findAll(Sort.by("formato")).list();
+
+        return list.stream().map(FormatoResponceDTO::valueOf).toList();
     }
 
     private void validar(FormatoDTO formatoDTO) throws ConstraintViolationException {

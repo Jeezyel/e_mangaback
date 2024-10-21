@@ -21,6 +21,9 @@ public interface EditoraService {
 
     // recursos extras
 
+    List<EditoraResponceDTO> search(int page , int size, String nome);
+
+    List<EditoraResponceDTO> search();
 
     EditoraResponceDTO findById(long id);
 }

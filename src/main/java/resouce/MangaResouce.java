@@ -33,6 +33,24 @@ public class MangaResouce {
         return Response.ok(mangaService.getAll(page, size)).build();
     }
 
+    //para crar a tela com os manga
+    //retorna tudo sem ordenação com paginação
+    @GET
+    @Path("/search/{nome}")
+    public Response search(@QueryParam("index") @DefaultValue("0") int page,
+                           @QueryParam("size")  @DefaultValue("100") int size,
+                           @PathParam("nome") String nome) {
+        return Response.ok(mangaService.search(page, size, nome)).build();
+    }
+
+    // para o campo de busca
+    //retorna tudo so que ordenado por nome
+    @GET
+    @Path("/search")
+    public Response search() {
+        return Response.ok(mangaService.search()).build();
+    }
+
     @POST
     @Transactional
     @Path("/insert")

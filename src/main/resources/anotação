@@ -3,6 +3,20 @@ colocar os variavel do dto minusculo
 ajusta o mpl pra isso
 
 
+   @Override
+    public List<EstadoResponseDTO> findAll() {
+
+	e assim que colocar ordenação por nome, id ou sigla
+
+        List<Estado> list = estadoRepository.findAll(Sort.by("sigla")).list();
 
 
+
+        return list
+        .stream()
+        .map(e -> EstadoResponseDTO.valueOf(e)).toList();
+    }
+
+
+    
 

@@ -1,5 +1,6 @@
 package service;
 
+import DTO.EditoraResponceDTO;
 import DTO.MangaDTO;
 import DTO.MangaResponceDTO;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -18,6 +19,10 @@ public interface MangaService {
     void delete(Long id);
 
     // recursos extras
+
+    List<MangaResponceDTO> search(int page , int size, String nome);
+
+    List<MangaResponceDTO> search();
 
     List<MangaResponceDTO> findByNome(String nome);
 

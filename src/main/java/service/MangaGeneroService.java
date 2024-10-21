@@ -19,6 +19,10 @@ public interface MangaGeneroService {
 
     // recursos extras
 
+    List<MangaGeneroResponceDTO> search(int page , int size, String genero);
+
+    List<MangaGeneroResponceDTO> search();
+
     List<MangaGeneroResponceDTO> findByGenero(String genero);
 
     MangaGeneroResponceDTO findById(long id);

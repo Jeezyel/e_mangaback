@@ -31,6 +31,24 @@ public class MangaGeneroResouce {
         return Response.ok(mangaGeneroService.getAll(page, size)).build();
     }
 
+    //para crar a tela com os manga
+    //retorna tudo sem ordenação com paginação
+    @GET
+    @Path("/search/{genero}")
+    public Response search(@QueryParam("index") @DefaultValue("0") int page,
+                           @QueryParam("size")  @DefaultValue("100") int size,
+                           @PathParam("genero") String genero) {
+        return Response.ok(mangaGeneroService.search(page, size, genero)).build();
+    }
+
+    // para o campo de busca
+    //retorna tudo so que ordenado por nome
+    @GET
+    @Path("/search")
+    public Response search() {
+        return Response.ok(mangaGeneroService.search()).build();
+    }
+
     @POST
     @Transactional
     @Path("/insert")

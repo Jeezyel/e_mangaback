@@ -1,5 +1,6 @@
 package repository;
 
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import model.Manga;
@@ -14,5 +15,11 @@ public class MangaGeneroRepository implements PanacheRepository<MangaGenero> {
         if (genero == null)
             return null;
         return find("UPPER(genero) LIKE ?1 ", "%"+genero.toUpperCase()+"%").list();
+    }
+
+    public PanacheQuery<MangaGenero> findByGeneroPanache(String genero){
+        if (genero == null)
+            return null;
+        return find("UPPER(genero) LIKE ?1 ", "%"+genero.toUpperCase()+"%");
     }
 }

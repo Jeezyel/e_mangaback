@@ -30,6 +30,24 @@ public class IdiomaResouce {
         return Response.ok(idiomaService.getAll(page, size)).build();
     }
 
+    //para crar a tela com os manga
+    //retorna tudo sem ordenação com paginação
+    @GET
+    @Path("/search/{idioma}")
+    public Response search(@QueryParam("index") @DefaultValue("0") int page,
+                           @QueryParam("size")  @DefaultValue("100") int size,
+                           @PathParam("idioma") String idioma) {
+        return Response.ok(idiomaService.search(page, size, idioma)).build();
+    }
+
+    // para o campo de busca
+    //retorna tudo so que ordenado por nome
+    @GET
+    @Path("/search")
+    public Response search() {
+        return Response.ok(idiomaService.search()).build();
+    }
+
     @POST
     @Transactional
     @Path("/insert")

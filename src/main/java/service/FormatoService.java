@@ -2,6 +2,7 @@ package service;
 
 import DTO.FormatoDTO;
 import DTO.FormatoResponceDTO;
+import DTO.MangaResponceDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
@@ -18,6 +19,10 @@ public interface FormatoService {
     void delete(Long id);
 
     // recursos extras
+
+    List<FormatoResponceDTO> search(int page , int size, String formato);
+
+    List<FormatoResponceDTO> search();
 
     List<FormatoResponceDTO> findByFormato(String formato);
 

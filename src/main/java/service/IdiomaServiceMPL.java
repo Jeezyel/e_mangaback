@@ -2,6 +2,7 @@ package service;
 
 import DTO.IdiomaDTO;
 import DTO.IdiomaResposceDTO;
+import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
@@ -81,6 +82,19 @@ public class IdiomaServiceMPL implements IdiomaService {
     @Override
     public long count() {
         return idiomaRepository.count();
+    }
+
+    public List<IdiomaResposceDTO> search(int page, int size, String idioma ) {
+
+        List<Idioma> list = idiomaRepository.findByIdiomaPanache(idioma).page(page,size).list();
+        return list.stream().map(IdiomaResposceDTO::valueOf).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<IdiomaResposceDTO> search() {
+        List<Idioma> list = idiomaRepository.findAll(Sort.by("nome")).list();
+
+        return list.stream().map(IdiomaResposceDTO::valueOf).toList();
     }
 
     private void validar(IdiomaDTO idiomaDTO) throws ConstraintViolationException {

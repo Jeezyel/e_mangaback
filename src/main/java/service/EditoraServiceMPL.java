@@ -3,6 +3,7 @@ package service;
 
 import DTO.EditoraDTO;
 import DTO.EditoraResponceDTO;
+import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
@@ -82,9 +83,18 @@ public class EditoraServiceMPL implements EditoraService{
     }
 
 
+    @Override
+    public List<EditoraResponceDTO> search(int page, int size, String nome) {
+        List<Editora> list = editoraRepository.findByNomePanache(nome).page(page,size).list();
+        return list.stream().map(EditoraResponceDTO::new).collect(Collectors.toList());
+    }
 
+    @Override
+    public List<EditoraResponceDTO> search() {
+        List<Editora> list = editoraRepository.findAll(Sort.by("nome")).list();
 
-
+        return list.stream().map(EditoraResponceDTO::new).toList();
+    }
 
     private void validar(EditoraDTO editoraDTO) throws ConstraintViolationException {
         Set<ConstraintViolation<EditoraDTO>> violations = validator.validate(editoraDTO);
