@@ -22,7 +22,6 @@ public interface FormatoService {
 
     List<FormatoResponceDTO> search(int page , int size, String formato);
 
-    List<FormatoResponceDTO> search();
 
     List<FormatoResponceDTO> findByFormato(String formato);
 

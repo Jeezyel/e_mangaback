@@ -85,13 +85,6 @@ public class MangaGeneroServiceMPL implements MangaGeneroService {
         return list.stream().map(MangaGeneroResponceDTO::valueOf).collect(Collectors.toList());
     }
 
-    @Override
-    public List<MangaGeneroResponceDTO> search() {
-        List<MangaGenero> list = mangaGeneroRepository.findAll(Sort.by("nome")).list();
-
-        return list.stream().map(MangaGeneroResponceDTO::valueOf).toList();
-    }
-
     private void validar(MangaGeneroDTO mangaGeneroDTO) throws ConstraintViolationException {
         Set<ConstraintViolation<MangaGeneroDTO>> violations = validator.validate(mangaGeneroDTO);
         if (!violations.isEmpty())

@@ -39,14 +39,6 @@ public class EditoraResouce {
         return Response.ok(editoraService.search(page, size, nome)).build();
     }
 
-    // para o campo de busca
-    //retorna tudo so que ordenado por nome
-    @GET
-    @Path("/search")
-    public Response search() {
-        return Response.ok(editoraService.search()).build();
-    }
-
     @GET
     @Path("/{id}")
     public EditoraResponceDTO findById(@PathParam("id") Long id) {

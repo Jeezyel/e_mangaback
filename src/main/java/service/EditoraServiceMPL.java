@@ -13,6 +13,7 @@ import model.Editora;
 import repository.EditoraRepository;
 import repository.EnderecoRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -89,12 +90,13 @@ public class EditoraServiceMPL implements EditoraService{
         return list.stream().map(EditoraResponceDTO::new).collect(Collectors.toList());
     }
 
-    @Override
+    /*@Override
     public List<EditoraResponceDTO> search() {
         List<Editora> list = editoraRepository.findAll(Sort.by("nome")).list();
 
         return list.stream().map(EditoraResponceDTO::new).toList();
-    }
+    }*/
+
 
     private void validar(EditoraDTO editoraDTO) throws ConstraintViolationException {
         Set<ConstraintViolation<EditoraDTO>> violations = validator.validate(editoraDTO);

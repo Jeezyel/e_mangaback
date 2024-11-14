@@ -43,14 +43,6 @@ public class MangaResouce {
         return Response.ok(mangaService.search(page, size, nome)).build();
     }
 
-    // para o campo de busca
-    //retorna tudo so que ordenado por nome
-    @GET
-    @Path("/search")
-    public Response search() {
-        return Response.ok(mangaService.search()).build();
-    }
-
     @POST
     @Transactional
     @Path("/insert")

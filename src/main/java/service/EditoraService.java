@@ -23,7 +23,7 @@ public interface EditoraService {
 
     List<EditoraResponceDTO> search(int page , int size, String nome);
 
-    List<EditoraResponceDTO> search();
+    //List<EditoraResponceDTO> search(String nome);
 
     EditoraResponceDTO findById(long id);
 }

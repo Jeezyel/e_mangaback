@@ -90,13 +90,6 @@ public class IdiomaServiceMPL implements IdiomaService {
         return list.stream().map(IdiomaResposceDTO::valueOf).collect(Collectors.toList());
     }
 
-    @Override
-    public List<IdiomaResposceDTO> search() {
-        List<Idioma> list = idiomaRepository.findAll(Sort.by("nome")).list();
-
-        return list.stream().map(IdiomaResposceDTO::valueOf).toList();
-    }
-
     private void validar(IdiomaDTO idiomaDTO) throws ConstraintViolationException {
         Set<ConstraintViolation<IdiomaDTO>> violations = validator.validate(idiomaDTO);
         if (!violations.isEmpty())

@@ -92,13 +92,6 @@ public class FormatoServiceMPL implements FormatoService {
         return list.stream().map(FormatoResponceDTO::valueOf).collect(Collectors.toList());
     }
 
-    @Override
-    public List<FormatoResponceDTO> search() {
-        List<FormatoManga> list = formatoRepository.findAll(Sort.by("formato")).list();
-
-        return list.stream().map(FormatoResponceDTO::valueOf).toList();
-    }
-
     private void validar(FormatoDTO formatoDTO) throws ConstraintViolationException {
         Set<ConstraintViolation<FormatoDTO>> violations = validator.validate(formatoDTO);
         if (!violations.isEmpty())

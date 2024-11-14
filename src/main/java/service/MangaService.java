@@ -22,8 +22,6 @@ public interface MangaService {
 
     List<MangaResponceDTO> search(int page , int size, String nome);
 
-    List<MangaResponceDTO> search();
-
     List<MangaResponceDTO> findByNome(String nome);
 
     MangaResponceDTO findById(long id);

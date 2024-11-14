@@ -21,8 +21,6 @@ public interface IdiomaService {
 
     List<IdiomaResposceDTO> search(int page , int size, String idioma);
 
-    List<IdiomaResposceDTO> search();
-
     List<IdiomaResposceDTO> findByIdioma(String idioma);
 
     IdiomaResposceDTO findById(long id);

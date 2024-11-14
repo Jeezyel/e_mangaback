@@ -40,13 +40,6 @@ public class IdiomaResouce {
         return Response.ok(idiomaService.search(page, size, idioma)).build();
     }
 
-    // para o campo de busca
-    //retorna tudo so que ordenado por nome
-    @GET
-    @Path("/search")
-    public Response search() {
-        return Response.ok(idiomaService.search()).build();
-    }
 
     @POST
     @Transactional
