@@ -1,21 +1,8 @@
-colocar os variavel do dto minusculo
+implementar a autneticação
 
-ajusta o mpl pra isso
+implementar upload de imagem em "manga e usuario"
 
-
-   @Override
-    public List<EstadoResponseDTO> findAll() {
-
-	e assim que colocar ordenação por nome, id ou sigla
-
-        List<Estado> list = estadoRepository.findAll(Sort.by("sigla")).list();
-
-
-
-        return list
-        .stream()
-        .map(e -> EstadoResponseDTO.valueOf(e)).toList();
-    }
+criar o curd de telefone e endereco
 
 
     

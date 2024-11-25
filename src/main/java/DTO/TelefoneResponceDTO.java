@@ -1,7 +1,6 @@
 package DTO;
 
 
-import jakarta.validation.constraints.NotBlank;
 import model.Telefone;
 
 public record TelefoneResponceDTO(
@@ -9,8 +8,9 @@ public record TelefoneResponceDTO(
         String codegoDeArea,
         String numero
 ) {
-    public TelefoneResponceDTO(Telefone telefone){
-        this(
+    public static TelefoneResponceDTO valueOf(Telefone telefone){
+
+        return new TelefoneResponceDTO(
                 telefone.getId(),
                 telefone.getCodegoDeArea(),
                 telefone.getNumero()

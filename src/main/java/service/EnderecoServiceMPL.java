@@ -38,7 +38,7 @@ public class EnderecoServiceMPL implements EnderecoService{
     public List<EnderecoResponceDTO> getAll() {
 
         List<Endereco> list = enderecoRepository.listAll();
-        return list.stream().map(EnderecoResponceDTO::new).collect(Collectors.toList());
+        return list.stream().map(EnderecoResponceDTO::valueOf).collect(Collectors.toList());
 
     }
 
@@ -55,7 +55,7 @@ public class EnderecoServiceMPL implements EnderecoService{
 
         enderecoRepository.persist(entity);
 
-        return new EnderecoResponceDTO(entity);
+        return EnderecoResponceDTO.valueOf(entity);
 
 
     }
@@ -75,7 +75,7 @@ public class EnderecoServiceMPL implements EnderecoService{
 
         enderecoRepository.persist(entity);
 
-        return new EnderecoResponceDTO(entity);
+        return EnderecoResponceDTO.valueOf(entity);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class EnderecoServiceMPL implements EnderecoService{
         enderecoRepository.persist(endereco);
 
 
-        return new EnderecoResponceDTO(endereco);
+        return EnderecoResponceDTO.valueOf(endereco);
     }
 
 
@@ -126,7 +126,7 @@ public class EnderecoServiceMPL implements EnderecoService{
             return null;
         }else {
             LOG.info("encontro o endereco");
-            return new EnderecoResponceDTO(endereco);
+            return EnderecoResponceDTO.valueOf(endereco);
         }
 
     }
@@ -140,7 +140,7 @@ public class EnderecoServiceMPL implements EnderecoService{
     public List<EnderecoResponceDTO> findByCep(String cep) {
 
         List<Endereco> list = enderecoRepository.findByListaCep(cep);
-        return list.stream().map(EnderecoResponceDTO::new).collect(Collectors.toList());
+        return list.stream().map(EnderecoResponceDTO::valueOf).collect(Collectors.toList());
     }
 
 

@@ -12,9 +12,10 @@ public record EnderecoResponceDTO(
         String bairro,
         long idMunicipio
 ) {
-    public EnderecoResponceDTO(Endereco endereco){
 
-        this(
+    public static EnderecoResponceDTO valueOf(Endereco endereco){
+
+        return new EnderecoResponceDTO(
                 endereco.getId(),
                 endereco.getCep(),
                 endereco.getLogradouro(),
@@ -22,6 +23,5 @@ public record EnderecoResponceDTO(
                 endereco.getBairro(),
                 endereco.getMunicipio().getId()
         );
-
     }
 }

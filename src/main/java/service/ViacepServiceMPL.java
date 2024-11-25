@@ -61,6 +61,6 @@ public class ViacepServiceMPL implements ViacepService{
         endereco.setMunicipio(municipioRepository.findByName(viaCep.getLocalidade()));
 
 
-        return new EnderecoResponceDTO(endereco);
+        return EnderecoResponceDTO.valueOf(endereco);
     }
 }
