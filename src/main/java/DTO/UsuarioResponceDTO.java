@@ -19,7 +19,10 @@ public record UsuarioResponceDTO(
 
         List<Endereco> endereco,
 
-        boolean administrador
+        boolean administrador, 
+        
+        String username
+        
         ) {
         public static UsuarioResponceDTO valueOf(Usuario usuario){
 
@@ -29,7 +32,8 @@ public record UsuarioResponceDTO(
                         usuario.getEmail(),
                         usuario.getTelefone(),
                         usuario.getEndereco(),
-                        usuario.isAdministrador()
+                        usuario.isAdministrador(),
+                        usuario.getUsername()
                 );
         }
 }

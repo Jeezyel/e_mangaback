@@ -32,7 +32,8 @@ public class UsuarioServiceMPL implements UsuarioService{
     @Inject
     Validator validator;
 
-
+    @Inject
+    HashService hashService;
 
     @Override
     public List<UsuarioResponceDTO> getAll() {
@@ -53,6 +54,8 @@ public class UsuarioServiceMPL implements UsuarioService{
         entity.setTelefone(telefoneList(usuarioDTO.telefone()));
         entity.setEndereco(enderecolist(usuarioDTO.endereco()));
         entity.setAdministrador(usuarioDTO.administrador());
+        entity.setUsername(usuarioDTO.username());
+        entity.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
 
         usuarioRepository.persist(entity);
 
@@ -70,6 +73,8 @@ public class UsuarioServiceMPL implements UsuarioService{
         entity.setTelefone(telefoneList(usuarioDTO.telefone()));
         entity.setEndereco(enderecolist(usuarioDTO.endereco()));
         entity.setAdministrador(usuarioDTO.administrador());
+        entity.setUsername(usuarioDTO.username());
+        entity.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
 
         usuarioRepository.persist(entity);
 
@@ -111,5 +116,11 @@ public class UsuarioServiceMPL implements UsuarioService{
             listEndereco.add(enderecoRepository.findById(idsEnderecos.get(i)));
         }
         return listEndereco;
+    }
+
+    @Override
+    public UsuarioResponceDTO findByLoginAndSenha(String login, String senha) {
+        Usuario usuario = usuarioRepository.findByUsernameAndSenha(login, senha);
+        return UsuarioResponceDTO.valueOf(usuario);
     }
 }

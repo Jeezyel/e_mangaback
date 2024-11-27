@@ -19,6 +19,12 @@ public record UsuarioDTO(
         List<Long> endereco,
 
         @NotBlank (message = "deve informar se o usuario e administrador ")
-        boolean administrador
+        boolean administrador,
+
+        @NotBlank (message = "O username deve ser informado ")
+        String username,
+
+        @NotBlank (message = "A senha deve ser informada ")
+        String senha
         ) {
 }

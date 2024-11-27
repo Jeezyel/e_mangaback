@@ -1,5 +1,6 @@
 package model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
@@ -10,14 +11,22 @@ public class Usuario extends DefaultEntity{
 
     private String nome;
     private String email;
-    @OneToMany
-    private List<Telefone> telefone;
-    @OneToMany
-    private List<Endereco> endereco;
     private boolean administrador;
 
+    private String senha;
+
+    @Column(unique = true)
+    private String username;
+    
+    @Column(name = "imagem")
     private String nomeImagem;
 
+    @OneToMany
+    private List<Telefone> telefone;
+    
+    @OneToMany
+    private List<Endereco> endereco;
+    
     public String getNomeImagem() {
         return nomeImagem;
     }
@@ -64,5 +73,21 @@ public class Usuario extends DefaultEntity{
 
     public void setAdministrador(boolean administrador) {
         this.administrador = administrador;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

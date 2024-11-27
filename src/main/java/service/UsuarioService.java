@@ -22,4 +22,6 @@ public interface UsuarioService {
     // recursos extras
 
     UsuarioResponceDTO findById(long id);
+
+    UsuarioResponceDTO findByLoginAndSenha(String login, String senha);
 }

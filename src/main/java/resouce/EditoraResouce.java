@@ -3,6 +3,7 @@ package resouce;
 import DTO.EditoraDTO;
 import DTO.EditoraResponceDTO;
 import aplication.Result;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
@@ -16,6 +17,7 @@ import service.EditoraService;
 import java.util.List;
 
 @Path("/editoras")
+@RolesAllowed("admin")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class EditoraResouce {

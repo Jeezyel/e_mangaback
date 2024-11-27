@@ -28,7 +28,6 @@ INSERT INTO public.estado (nome, sigla) VALUES
 ('Sergipe', 'SE'),
 ('Tocantins', 'TO');
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 INSERT INTO public.municipio (nome, id_estado) VALUES
@@ -112,7 +111,6 @@ INSERT INTO public.municipio (nome, id_estado) VALUES
 ('Palmas', 27),
 ('Araguaína', 27);
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 INSERT INTO public.endereco(municipio_id, bairro, cep, complemento, logradouro) VALUES
@@ -121,6 +119,9 @@ INSERT INTO public.endereco(municipio_id, bairro, cep, complemento, logradouro) 
 ( 5 , 'bairro central', '72800000', 'perto do meio', 'GO');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+INSERT INTO public.usuario(nome, email, administrador, senha, username, imagem) VALUES
+('Nicole', 'muniznicole@unitins.br', 'true', '123456', 'muniznicole', 'imagem.png');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
