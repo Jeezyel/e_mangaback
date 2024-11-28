@@ -1,43 +1,41 @@
 package service;
 
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.util.Base64;
-
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class HashServiceImpl implements HashService {
 
-    // sequencia aleatória a ser adicionada na senha
-    private String salt = "#blahxyz17";
-    // contagem de iteracoes
-    private Integer iterationCount = 405;
-    // comprimento do hash em bits
-    private Integer keyLength = 512;
-
     @Override
     public String getHashSenha(String senha) {
         try {
-            byte[] result = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512")
-                    .generateSecret(
-                            new PBEKeySpec(senha.toCharArray(), salt.getBytes(), iterationCount, keyLength))
-                    .getEncoded();
-            return Base64.getEncoder().encodeToString(result);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new RuntimeException(e);
+            // Usar SHA-256 para gerar o hash
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(senha.getBytes());
+            StringBuilder hexString = new StringBuilder();
+
+            // Converter o hash em uma string hexadecimal
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Erro ao gerar hash da senha", e);
         }
     }
 
     public static void main(String[] args) {
-        HashService hash = new HashServiceImpl();
-        System.out.println(hash.getHashSenha("123456"));
-        System.out.println(hash.getHashSenha("123456"));
-        System.out.println(hash.getHashSenha("123456"));
-        System.out.println(hash.getHashSenha("123457"));
-    }
+        HashServiceImpl hashService = new HashServiceImpl();
 
+        // Exemplos de hash
+        System.out.println("Hash para '123456': " + hashService.getHashSenha("123456"));
+        System.out.println("Hash para '123457': " + hashService.getHashSenha("123457"));
+    }
 }

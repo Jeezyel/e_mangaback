@@ -20,14 +20,7 @@ public class JwtServiceImpl implements JwtService {
         Instant expiryDate = now.plus(EXPIRATION_TIME);
 
         Set<String> roles = new HashSet<String>();
-
-        String perfil;
-        if(dto.administrador()){
-            perfil = "admin";
-        }else{
-            perfil = "cliente";
-        }
-        
+        String perfil = dto.administrador() ? "admin" : "cliente";
         roles.add(perfil);
 
         return Jwt.issuer("unitins-jwt")
@@ -36,6 +29,5 @@ public class JwtServiceImpl implements JwtService {
             .expiresAt(expiryDate)
             .sign();
 
-    }
-    
+    }    
 }

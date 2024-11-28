@@ -121,7 +121,7 @@ INSERT INTO public.endereco(municipio_id, bairro, cep, complemento, logradouro) 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 INSERT INTO public.usuario(nome, email, administrador, senha, username, imagem) VALUES
-('Nicole', 'muniznicole@unitins.br', 'true', '123456', 'muniznicole', 'imagem.png');
+('Nicole', 'muniznicole@unitins.br', 'true', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'muniznicole', 'imagem.png');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

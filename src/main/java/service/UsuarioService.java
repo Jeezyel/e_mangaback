@@ -1,19 +1,17 @@
 package service;
 
-
+import jakarta.enterprise.context.ApplicationScoped;
+import java.util.List;
 
 import DTO.UsuarioDTO;
 import DTO.UsuarioResponceDTO;
-import jakarta.enterprise.context.ApplicationScoped;
-
-import java.util.List;
 
 @ApplicationScoped
 public interface UsuarioService {
 
     List<UsuarioResponceDTO> getAll();
 
-    UsuarioResponceDTO create(UsuarioDTO usuarioDTO);
+    UsuarioResponceDTO create(UsuarioDTO usuarioDTO, Boolean isAdminRequest);
 
     UsuarioResponceDTO update(Long id, UsuarioDTO usuarioDTO);
 
@@ -23,5 +21,5 @@ public interface UsuarioService {
 
     UsuarioResponceDTO findById(long id);
 
-    UsuarioResponceDTO findByLoginAndSenha(String login, String senha);
+    UsuarioResponceDTO findByUsernameAndSenha(String login, String senha, Boolean administrador);
 }

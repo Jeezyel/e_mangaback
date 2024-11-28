@@ -1,25 +1,27 @@
 package service;
 
-import DTO.EditoraDTO;
-import DTO.UsuarioDTO;
-import DTO.UsuarioResponceDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
-import model.Endereco;
-import model.Telefone;
-import model.Usuario;
-import repository.EnderecoRepository;
-import repository.TelefoneRepository;
-import repository.UsuarioRepository;
 
 import java.util.List;
 import java.util.Set;
 
+import model.Endereco;
+import model.Telefone;
+import model.Usuario;
+import DTO.EditoraDTO;
+import DTO.UsuarioDTO;
+import DTO.UsuarioResponceDTO;
+import repository.EnderecoRepository;
+import repository.TelefoneRepository;
+import repository.UsuarioRepository;
+
 @ApplicationScoped
 public class UsuarioServiceMPL implements UsuarioService{
+    
     @Inject
     UsuarioRepository usuarioRepository;
 
@@ -42,18 +44,23 @@ public class UsuarioServiceMPL implements UsuarioService{
     }
 
     @Override
-    public UsuarioResponceDTO create(UsuarioDTO usuarioDTO) {
-        validar(usuarioDTO);
+    public UsuarioResponceDTO create(UsuarioDTO usuarioDTO, Boolean isAdminRequest) {
+        
+        // Por padrão, todos os usuários são clientes
+        
+        Boolean isAdmin = usuarioDTO.administrador() != null ? usuarioDTO.administrador() : false;
 
-
+        // Verifica se a requisição tem permissão para criar administradores
+        if (isAdmin && !isAdminRequest){
+            throw new RuntimeException("Somente administradores podem criar novos administradores.");
+        }
 
         Usuario entity = new Usuario();
-
         entity.setNome(usuarioDTO.nome());
         entity.setEmail(usuarioDTO.email());
         entity.setTelefone(telefoneList(usuarioDTO.telefone()));
         entity.setEndereco(enderecolist(usuarioDTO.endereco()));
-        entity.setAdministrador(usuarioDTO.administrador());
+        entity.setAdministrador(false);
         entity.setUsername(usuarioDTO.username());
         entity.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
 
@@ -119,8 +126,8 @@ public class UsuarioServiceMPL implements UsuarioService{
     }
 
     @Override
-    public UsuarioResponceDTO findByLoginAndSenha(String login, String senha) {
-        Usuario usuario = usuarioRepository.findByUsernameAndSenha(login, senha);
-        return UsuarioResponceDTO.valueOf(usuario);
+    public UsuarioResponceDTO findByUsernameAndSenha(String login, String senha, Boolean administrador) {
+        Usuario usuario = usuarioRepository.findByUsernameAndSenha(login, senha, administrador);
+        return usuario != null ? UsuarioResponceDTO.valueOf(usuario) : null;
     }
 }
