@@ -1,6 +1,5 @@
 package service;
 
-import DTO.EditoraResponceDTO;
 import DTO.MangaDTO;
 import DTO.MangaResponceDTO;
 import jakarta.enterprise.context.ApplicationScoped;

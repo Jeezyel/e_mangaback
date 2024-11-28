@@ -16,7 +16,7 @@ public class TelefoneRepository implements PanacheRepository<Telefone> {
         return find("UPPER(codegoDeArea) LIKE ?1 ", "%"+codegoDeArea.toUpperCase()+"%").list();
     }
 
-    public PanacheQuery<Telefone> findByNomePanache(String numero){
+    public PanacheQuery<Telefone> findByNumeroPanache(String numero){
         if (numero == null)
             return null;
         return find("UPPER(numero) LIKE ?1 ", "%"+numero.toUpperCase()+"%");
