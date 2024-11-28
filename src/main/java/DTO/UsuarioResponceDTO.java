@@ -21,7 +21,9 @@ public record UsuarioResponceDTO(
 
         boolean administrador, 
         
-        String username
+        String username,
+
+        String senha
         
         ) {
         public static UsuarioResponceDTO valueOf(Usuario usuario){
@@ -33,7 +35,8 @@ public record UsuarioResponceDTO(
                         usuario.getTelefone(),
                         usuario.getEndereco(),
                         usuario.isAdministrador(),
-                        usuario.getUsername()
+                        usuario.getUsername(),
+                        usuario.getSenha()
                 );
         }
 }

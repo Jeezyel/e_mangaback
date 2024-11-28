@@ -47,8 +47,7 @@ public class UsuarioServiceMPL implements UsuarioService{
     public UsuarioResponceDTO create(UsuarioDTO usuarioDTO, Boolean isAdminRequest) {
         
         // Por padrão, todos os usuários são clientes
-        
-        Boolean isAdmin = usuarioDTO.administrador() != null ? usuarioDTO.administrador() : false;
+        boolean isAdmin = usuarioDTO.administrador() != null ? usuarioDTO.administrador() : false;
 
         // Verifica se a requisição tem permissão para criar administradores
         if (isAdmin && !isAdminRequest){
@@ -60,7 +59,7 @@ public class UsuarioServiceMPL implements UsuarioService{
         entity.setEmail(usuarioDTO.email());
         entity.setTelefone(telefoneList(usuarioDTO.telefone()));
         entity.setEndereco(enderecolist(usuarioDTO.endereco()));
-        entity.setAdministrador(false);
+        entity.setAdministrador(isAdmin);
         entity.setUsername(usuarioDTO.username());
         entity.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
 
