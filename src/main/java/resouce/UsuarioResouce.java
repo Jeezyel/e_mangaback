@@ -52,13 +52,18 @@ public class UsuarioResouce {
             // Se o novo usuário é administrador e o requisitante não for, lança erro
             if (usuarioDTO.administrador() != null && usuarioDTO.administrador() && !isAdminRequest) {
                 return Response.status(Response.Status.FORBIDDEN)
-                        .entity("Somente administradores podem criar novos administradores.")
+                        .entity("{\"error\": \"Somente administradores podem criar novos administradores.\"}")
+                        .type(MediaType.APPLICATION_JSON)
                         .build();
             }
             UsuarioResponceDTO usuario = usuarioService.create(usuarioDTO, isAdminRequest);
             return Response.status(Response.Status.CREATED).entity(usuario).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            LOG.error("Erro ao criar usuário: ", e);
+            return Response.status(Response.Status.BAD_REQUEST)
+                .entity("{\"error\": \"" + e.getMessage() + "\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
         }
     }   
 
