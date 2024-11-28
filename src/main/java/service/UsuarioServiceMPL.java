@@ -6,6 +6,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -108,25 +109,34 @@ public class UsuarioServiceMPL implements UsuarioService{
 
     private List<Telefone> telefoneList(List<Long> idstelefones){
 
-        List<Telefone> listTelefone = null;
-        for (int i = 0; i < idstelefones.size(); i++) {
-            listTelefone.add(telefoneRepository.findById(idstelefones.get(i)));
+        List<Telefone> listTelefone = new ArrayList<>();
+        if (idstelefones != null) {
+            for (Long id : idstelefones) {
+                listTelefone.add(telefoneRepository.findById(id));
+            }            
         }
         return listTelefone;
     }
 
     private List<Endereco> enderecolist(List<Long> idsEnderecos){
 
-        List<Endereco> listEndereco = null;
-        for (int i = 0; i < idsEnderecos.size(); i++) {
-            listEndereco.add(enderecoRepository.findById(idsEnderecos.get(i)));
+        List<Endereco> listEndereco = new ArrayList<>();
+        if (idsEnderecos != null){
+            for (Long id : idsEnderecos) {
+                listEndereco.add(enderecoRepository.findById(id));
+            }    
         }
         return listEndereco;
     }
 
     @Override
-    public UsuarioResponceDTO findByUsernameAndSenha(String login, String senha, Boolean administrador) {
-        Usuario usuario = usuarioRepository.findByUsernameAndSenha(login, senha, administrador);
+    public UsuarioResponceDTO findByUsernameAndSenha(String username, String senha, Boolean administrador) {
+    if (username == null || senha == null || administrador == null)
+        return null;
+
+        // Use o repositório para realizar a busca
+        Usuario usuario = usuarioRepository.findByUsernameAndSenha(username, senha, administrador);
         return usuario != null ? UsuarioResponceDTO.valueOf(usuario) : null;
     }
+
 }

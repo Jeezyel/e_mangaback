@@ -47,6 +47,7 @@ public class UsuarioResouce {
         try {
             // Valida se o token pertence a um administrador
             boolean isAdminRequest = jwtUtils.isAdmin(authToken);
+            LOG.info("isAdminRequest: " + isAdminRequest);
 
             // Se o novo usuário é administrador e o requisitante não for, lança erro
             if (usuarioDTO.administrador() != null && usuarioDTO.administrador() && !isAdminRequest) {
