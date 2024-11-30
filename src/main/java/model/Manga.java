@@ -11,6 +11,8 @@ public class Manga extends DefaultEntity {
 
     private String nome;
 
+    private Float valor;
+
     @ManyToOne
     private FormatoManga formatos;
 
@@ -31,6 +33,14 @@ public class Manga extends DefaultEntity {
 
     @Enumerated(EnumType.STRING)
     private ClassificacaoIndicativa classificacao; // o unico que vai continuar um enum
+
+    public Float getValor() {
+        return valor;
+    }
+
+    public void setValor(Float valor) {
+        this.valor = valor;
+    }
 
     public String getNome() {
         return nome;

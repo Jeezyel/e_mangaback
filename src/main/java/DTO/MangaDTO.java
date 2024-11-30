@@ -12,6 +12,9 @@ public record MangaDTO(
         @NotBlank(message = "O campo nome deve ser informado.")
         String nome,
 
+        @NotBlank(message = "o campo valor deve ser informado")
+        Float valor,
+
         @NotBlank(message = "O campo Formato do Manga deve ser informado.")
         FormatoManga formatoManga,
 

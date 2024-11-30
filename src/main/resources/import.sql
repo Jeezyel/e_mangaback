@@ -129,6 +129,10 @@ INSERT INTO public.telefone(codegoDeArea, numero) VALUES
 INSERT INTO public.usuario(nome, email, administrador, senha, username, imagem) VALUES
 ('Nicole', 'muniznicole@unitins.br', 'true', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'muniznicole', 'imagem.png');
 
+INSERT INTO public.usuario(nome, email, administrador, senha, username, imagem) VALUES
+('Jeezyel', 'jeezyel@unitins.br', 'true', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'jeezyel', 'imagem.png'),
+('pp', 'pp@unitins.br', 'false', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'pp', 'imagem.png');
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 INSERT INTO public.editora(nome, cnpj, telefone) VALUES

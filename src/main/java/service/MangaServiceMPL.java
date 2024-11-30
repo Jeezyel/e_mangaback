@@ -41,6 +41,7 @@ public class MangaServiceMPL implements MangaService {
         Manga entity = new Manga();
 
         entity.setNome(mangaDTO.nome());
+        entity.setValor(mangaDTO.valor());
         entity.setFormatos(mangaDTO.formatoManga());
         entity.setGeneros(mangaDTO.mangaGeneros());
         entity.setIdioma(mangaDTO.idioma());
@@ -62,6 +63,7 @@ public class MangaServiceMPL implements MangaService {
         entity = mangaRepository.findById(id);
 
         entity.setNome(mangaDTO.nome());
+        entity.setValor(mangaDTO.valor());
         entity.setFormatos(mangaDTO.formatoManga());
         entity.setGeneros(mangaDTO.mangaGeneros());
         entity.setIdioma(mangaDTO.idioma());

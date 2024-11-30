@@ -9,6 +9,8 @@ public record MangaResponceDTO(
 
         String nome,
 
+        Float valor,
+
         FormatoManga formatoManga,
 
         Set<MangaGenero> mangaGenero,
@@ -21,6 +23,7 @@ public record MangaResponceDTO(
        return new MangaResponceDTO(
                manga.getId(),
                manga.getNome(),
+               manga.getValor(),
                manga.getFormatos(),
                manga.getGeneros(),
                manga.getIdioma(),

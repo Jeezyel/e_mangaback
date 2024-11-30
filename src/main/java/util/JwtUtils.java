@@ -3,6 +3,8 @@ package util;
 import io.smallrye.jwt.auth.principal.JWTParser;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import model.Usuario;
+
 import java.util.List;
 @ApplicationScoped
 public class JwtUtils {
@@ -21,6 +23,34 @@ public class JwtUtils {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public Usuario getUsuarioFromToken(String token) {
+        try {
+            var jwtClaims = jwtParser.parse(token); // Parseia o token
+
+            // Extrai os claims necessários
+            String nome = jwtClaims.getClaim("nome");
+            String email = jwtClaims.getClaim("email");
+            List<Long> telefone = jwtClaims.getClaim("telefone");
+            List<Long> endereco = jwtClaims.getClaim("endereco");
+            Boolean administrador = isAdmin(token); // Usa o método isAdmin
+            String username = jwtClaims.getClaim("preferred_username"); // Claim comum para usernames
+            String senha = jwtClaims.getClaim("senha"); // Use apenas se necessário (não recomendado armazenar senhas em tokens)
+
+            // Popula o DTO
+            Usuario usuario = new Usuario();
+            usuario.setNome(nome);
+            usuario.setEmail(email);
+            usuario.setAdministrador(administrador);
+            usuario.setUsername(username);
+            usuario.setSenha(senha);
+
+            return usuario;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // Retorna null em caso de erro (pode lançar exceções ou usar Optional)
         }
     }
 }
