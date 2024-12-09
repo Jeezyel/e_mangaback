@@ -30,7 +30,7 @@ INSERT INTO public.estado (nome, sigla) VALUES
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-INSERT INTO public.municipio (nome, id_estado) VALUES
+INSERT INTO public.municipio (nome, idEstado) VALUES
 -- Municípios do Acre (AC)
 ('Rio Branco', 1),
 ('Cruzeiro do Sul', 1),
