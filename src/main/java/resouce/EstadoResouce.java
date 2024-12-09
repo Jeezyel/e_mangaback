@@ -19,7 +19,7 @@ import service.EstadoService;
 import java.util.List;
 
 @Path("/estados")
-@RolesAllowed("admin")
+//@RolesAllowed("admin")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class EstadoResouce {
