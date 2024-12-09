@@ -24,7 +24,7 @@ public class EnderecoResouce {
     private static final Logger LOG = Logger.getLogger(EnderecoResouce.class);
 
     @GET
-    @Path("/getAll")
+    @Path("/")
     public List<EnderecoResponceDTO> getAll() {
         LOG.info("Buscando todos os estados.");
         LOG.debug("Debug de busca de lista de estados.");
@@ -98,7 +98,7 @@ public class EnderecoResouce {
     }
 
     @DELETE
-    @Path("/DeleteForId/{Id}")
+    @Path("/delete/{Id}")
     @Transactional
     public void DeleteForId(@PathParam("Id") long id){
         enderecoService.delete(id);

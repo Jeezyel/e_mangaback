@@ -9,7 +9,6 @@ public record EnderecoDTO(
         String logradouro,
         String complemento,
         String bairro,
-        @NotBlank(message = "o Id do Municipios deve ser informado")
         long idMunicipio
 ) {
 }

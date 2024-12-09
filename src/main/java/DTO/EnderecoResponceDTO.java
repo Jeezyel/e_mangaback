@@ -6,11 +6,10 @@ import model.Endereco;
 public record EnderecoResponceDTO(
         long idEndereco,
         String cep,
-
         String logradouro,
         String complemento,
         String bairro,
-        long idMunicipio
+        String nomeMunicipio
 ) {
 
     public static EnderecoResponceDTO valueOf(Endereco endereco){
@@ -21,7 +20,7 @@ public record EnderecoResponceDTO(
                 endereco.getLogradouro(),
                 endereco.getComplemento(),
                 endereco.getBairro(),
-                endereco.getMunicipio().getId()
+                endereco.getMunicipio().getNome()
         );
     }
 }

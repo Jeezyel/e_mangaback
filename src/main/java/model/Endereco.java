@@ -1,5 +1,6 @@
 package model;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 
@@ -10,11 +11,10 @@ public class Endereco extends DefaultEntity {
     private String logradouro;
     private String complemento;
     private String bairro;
+
     @ManyToOne
+    @JoinColumn(name = "idMunicipio")
     private Municipio municipio;
-
-
-
 
     public String getCep() {
         return cep;
