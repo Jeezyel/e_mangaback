@@ -50,8 +50,11 @@ public class MunicipioServiceMPL implements MunicipioService{
         var entity = new Municipio();
         entity.setNome(municipioDTO.nome());
 
-        entity.setEstado(new Estado());
-        entity.getEstado().setId(municipioDTO.idEstado());
+        Estado estado = estadoRepository.findById(municipioDTO.idEstado());
+        if (estado == null){
+            throw new IllegalArgumentException("Estado com ID " + municipioDTO.idEstado() + " não encontrado.");
+        }
+        entity.setEstado(estado);
 
         municipioRepository.persist(entity);
 
