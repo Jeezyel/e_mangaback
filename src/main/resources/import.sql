@@ -1,4 +1,3 @@
-
 INSERT INTO public.estado (nome, sigla) VALUES
 ('Acre', 'AC'),
 ('Alagoas', 'AL'),
@@ -114,24 +113,37 @@ INSERT INTO public.municipio (nome, idEstado) VALUES
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 INSERT INTO public.endereco(idMunicipio, bairro, cep, complemento, logradouro) VALUES
-( 5 , 'plano diretor sul', '77000000', 'perto da cula', 'TO'),
-( 5 , 'no meio da cidade', '20010000', 'perto do tiroteio', 'RJ'),
-( 5 , 'bairro central', '72800000', 'perto do meio', 'GO');
+(5 , 'plano diretor sul', '77000000', 'perto da cula', '208 sul'),
+(5 , 'no meio da cidade', '20010000', 'perto do tiroteio', '108 sul'),
+(5 , 'bairro central', '72800000', 'perto do meio', '104 norte'),
+(6, 'Centro', '12345678', 'Apt. 101', 'Rua Principal'),
+(7, 'Jardim das Flores', '87654321', 'Bloco B', 'Av. das Rosas'),
+(8, 'Bela Vista', '11223344', 'Casa 2', 'Travessa das Palmeiras'),
+(9, 'Vila Nova', '44332211', 'Térreo', 'Rua dos Ipês'),
+(10, 'Santa Maria', '55667788', 'Sala 5', 'Alameda das Acácias'),
+(11, 'Lagoa Azul', '77889900', 'Fundos', 'Rua da Harmonia'),
+(12, 'Vila Esperança', '99001122', 'Prédio 3', 'Rua do Sol');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 INSERT INTO public.telefone(codegoDeArea, numero) VALUES
-('63', '981508736');
-('63', '981306914');
+('63', '981508736'),
+('63', '981306914'),
+('61', '998877665'),
+('62', '987654321'),
+('64', '912345678'),
+('65', '934567890'),
+('67', '956789012'),
+('68', '998761234'),
+('69', '987612345'),
+('71', '997123456');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 INSERT INTO public.usuario(nome, email, administrador, senha, username, imagem) VALUES
-('Nicole', 'muniznicole@unitins.br', 'true', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'muniznicole', 'imagem.png');
-
-INSERT INTO public.usuario(nome, email, administrador, senha, username, imagem) VALUES
 ('Jeezyel', 'jeezyel@unitins.br', 'true', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'jeezyel', 'imagem.png'),
-('pp', 'pp@unitins.br', 'false', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'pp', 'imagem.png');
+('Nicole', 'nicole@unitins.br', 'true', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'nicole', 'imagem.png'),
+('Janio', 'janio@unitins.br', 'false', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'janio', 'imagem.png');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -154,7 +166,12 @@ INSERT INTO public.formatoManga(formato) VALUES
 ('Bunkobon'),
 ('Digital'),
 ('Volume'),
-('One-shot');
+('One-shot'),
+('Graphic Novel'),
+('Webtoon'),
+('Omnibus'),
+('Deluxe Edition'),
+('Light Novel');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -171,4 +188,3 @@ INSERT INTO public.idioma(idioma, sigla) VALUES
 ('Russo', 'RU');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
