@@ -1,31 +1,42 @@
 package DTO;
 
 import jakarta.validation.constraints.NotBlank;
-import model.ClassificacaoIndicativa;
-import model.FormatoManga;
-import model.Idioma;
-import model.MangaGenero;
-
+import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Set;
 
+import model.Manga;
+import model.Editora;
+import model.FormatoManga;
+import model.MangaGenero;
+import model.ClassificacaoIndicativa;
+import model.Idioma;
+
 public record MangaDTO(
+
         @NotBlank(message = "O campo nome deve ser informado.")
         String nome,
 
-        @NotBlank(message = "o campo valor deve ser informado")
-        Float valor,
+        @NotNull(message = "o campo valor deve ser informado")
+        BigDecimal valor,
 
-        @NotBlank(message = "O campo Formato do Manga deve ser informado.")
-        FormatoManga formatoManga,
+        @NotNull(message = "o campo editora deve ser informado")
+        Long idEditora,
 
-        @NotBlank(message = "O campo MangaGenero deve ser informado.")
-        Set<MangaGenero> mangaGeneros,
+        @NotNull(message = "O campo formato do mangá deve ser informado.")
+        Long idFormato,
 
-        @NotBlank(message = "O campo idioma deve ser informado.")
-        Idioma idioma,
+        @NotNull(message = "O campo gênero do mangá deve ser informado.")
+        Set<Long> idMangaGenero,
 
-        @NotBlank(message = "O campo classificacao deve ser informado.")
-        ClassificacaoIndicativa classificacao
+        @NotNull(message = "O campo idioma deve ser informado.")
+        Long idIdioma,
+
+        @NotNull(message = "O campo classificação do mangá deve ser informado.")
+        Integer id,
+
+        @NotNull(message = "O estoque do mangá deve ser informado.")
+        Integer estoque
 
         ) {
 }

@@ -8,8 +8,8 @@ import java.util.List;
 
 @ApplicationScoped
 public interface MangaService {
-    List<MangaResponceDTO> getAll(int page , int size);
 
+    List<MangaResponceDTO> getAll(int page , int size);
 
     MangaResponceDTO create(MangaDTO mangaDTO);
 

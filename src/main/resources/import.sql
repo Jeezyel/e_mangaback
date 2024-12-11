@@ -161,6 +161,20 @@ INSERT INTO public.editora(nome, cnpj, telefone) VALUES
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+INSERT INTO public.mangaGenero(genero) VALUES
+('Ação'),
+('Aventura'),
+('Comédia'),
+('Drama'),
+('Fantasia'),
+('Ficção Científica'),
+('Horror'),
+('Mistério'),
+('Romance'),
+('Suspense');
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 INSERT INTO public.formatoManga(formato) VALUES
 ('Tankobon'),
 ('Bunkobon'),
@@ -186,5 +200,34 @@ INSERT INTO public.idioma(idioma, sigla) VALUES
 ('Chinês', 'ZH'),
 ('Coreano', 'KO'),
 ('Russo', 'RU');
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+INSERT INTO public.manga(nome, valor, idEditora, idFormato, idIdioma, classificacaoindicativa, estoque)
+VALUES
+  ('Naruto', 35.90, 1, 1, 1, 1, 50),
+  ('One Piece', 40.00, 1, 1, 1, 1, 75),
+  ('Attack on Titan', 45.00, 2, 2, 1, 1, 30),
+  ('Dragon Ball Z', 30.00, 1, 1, 1, 1, 60),
+  ('Demon Slayer', 38.00, 2, 1, 1, 1, 40),
+  ('My Hero Academia', 42.00, 3, 2, 1, 1, 70),
+  ('Death Note', 33.50, 1, 1, 1, 1, 45),
+  ('Fullmetal Alchemist', 39.99, 3, 2, 1, 1, 55),
+  ('Bleach', 36.50, 1, 1, 1, 1, 65),
+  ('Tokyo Revengers', 41.50, 2, 1, 1, 1, 80);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+INSERT INTO public.manga_genero (idManga, idGenero) VALUES 
+(1, 1), (1, 2), -- Naruto: Ação, Aventura
+(2, 1), (2, 2), -- One Piece: Ação, Aventura
+(3, 1), (3, 3), (3, 5), -- Attack on Titan: Ação, Drama, Sobrenatural
+(4, 1), (4, 4), (4, 6), -- Dragon Ball Z: Ação, Fantasia, Comédia
+(5, 1), (5, 4), (5, 5), -- Demon Slayer: Ação, Fantasia, Sobrenatural
+(6, 1), (6, 6), (6, 3), -- My Hero Academia: Ação, Comédia, Drama
+(7, 3), (7, 5), (7, 7), -- Death Note: Drama, Sobrenatural, Suspense
+(8, 1), (8, 8), (8, 3), -- Fullmetal Alchemist: Ação, Sci-Fi, Drama
+(9, 1), (9, 4), (9, 9), -- Bleach: Ação, Fantasia, Romance
+(10, 1), (10, 3), (10, 10); -- Tokyo Revengers: Ação, Drama, Histórico
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

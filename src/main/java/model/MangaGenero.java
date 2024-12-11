@@ -10,9 +10,8 @@ public class MangaGenero extends DefaultEntity{
 
     private String genero;
 
-    @ManyToMany(mappedBy = "generos")
+    @ManyToMany(mappedBy = "genero")
     private Set<Manga> manga;
-
 
     public String getGenero() {
         return genero;

@@ -1,46 +1,51 @@
 package model;
 
 import jakarta.persistence.*;
-
-import java.util.List;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.util.Set;
-
 
 @Entity
 public class Manga extends DefaultEntity {
 
+    @NotNull
+    @Size(max = 100)
     private String nome;
 
-    private Float valor;
+    @NotNull
+    @Column(nullable = false)
+    private BigDecimal valor;
 
     @ManyToOne
-    private FormatoManga formatos;
-
-/*  @Enumerated(EnumType.STRING)
-    private Set<MangaGenre> genres; QUANDO VC USAR O 'Set<> INDICA QUE VC QUER SALVAR UMA COLEÇÃO DE DADO DEQUELE ENUM'
-    */
+    @JoinColumn(name = "idEditora", nullable = false) // Relacionamento com Editora
+    private Editora editora;
 
     @ManyToMany
     @JoinTable(
-            name = "manga_genero", // Nome da tabela de junção
-            joinColumns = @JoinColumn(name = "manga_id"), // Chave estrangeira para Manga
-            inverseJoinColumns = @JoinColumn(name = "genero_id") // Chave estrangeira para Genero
+        name = "manga_genero", 
+        joinColumns = @JoinColumn(name = "idManga"), 
+        inverseJoinColumns = @JoinColumn(name = "idGenero")
     )
-     private Set<MangaGenero> generos;
+    private Set<MangaGenero> genero;
 
     @ManyToOne
+    @JoinColumn(name = "idFormato", nullable = false)
+    private FormatoManga formato;
+
+    @ManyToOne
+    @JoinColumn(name = "idIdioma", nullable = false)
     private Idioma idioma;
 
-    @Enumerated(EnumType.STRING)
-    private ClassificacaoIndicativa classificacao; // o unico que vai continuar um enum
+    @Enumerated(EnumType.ORDINAL) // Use ORDINAL se o banco espera números
+    @Column(name = "classificacaoindicativa", nullable = false)
+    private ClassificacaoIndicativa classificacaoIndicativa;
+    
+    @NotNull
+    @Column(nullable = false)
+    private Integer estoque;
 
-    public Float getValor() {
-        return valor;
-    }
-
-    public void setValor(Float valor) {
-        this.valor = valor;
-    }
+    // Getters e Setters
 
     public String getNome() {
         return nome;
@@ -50,12 +55,36 @@ public class Manga extends DefaultEntity {
         this.nome = nome;
     }
 
-    public FormatoManga getFormatos() {
-        return formatos;
+    public BigDecimal getValor() {
+        return valor;
     }
 
-    public void setFormatos(FormatoManga formatos) {
-        this.formatos = formatos;
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public Editora getEditora() {
+        return editora;
+    }
+
+    public void setEditora(Editora editora) {
+        this.editora = editora;
+    }
+
+    public Set<MangaGenero> getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Set<MangaGenero> genero) {
+        this.genero = genero;
+    }
+
+    public FormatoManga getFormato() {
+        return formato;
+    }
+
+    public void setFormato(FormatoManga formato) {
+        this.formato = formato;
     }
 
     public Idioma getIdioma() {
@@ -66,19 +95,20 @@ public class Manga extends DefaultEntity {
         this.idioma = idioma;
     }
 
-    public Set<MangaGenero> getGeneros() {
-        return generos;
+    public ClassificacaoIndicativa getClassificacaoIndicativa() {
+        return classificacaoIndicativa;
     }
 
-    public void setGeneros(Set<MangaGenero> generos) {
-        this.generos = generos;
+    public void setClassificacaoIndicativa(ClassificacaoIndicativa classificacaoIndicativa) {
+        this.classificacaoIndicativa = classificacaoIndicativa;
     }
 
-    public ClassificacaoIndicativa getClassificacao() {
-        return classificacao;
+    public Integer getEstoque() {
+        return estoque;
     }
 
-    public void setClassificacao(ClassificacaoIndicativa classificacao) {
-        this.classificacao = classificacao;
+    public void setEstoque(Integer estoque) {
+        this.estoque = estoque;
     }
+    
 }

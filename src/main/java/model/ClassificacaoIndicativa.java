@@ -11,8 +11,8 @@ public enum ClassificacaoIndicativa {
     MAIS_16(5, "16+"),
     MAIS_18(6, "18+");
 
-    private int id;
-    private String label;
+    private final int id;
+    private final String label;
 
     ClassificacaoIndicativa(int id, String label) {
         this.id = id;
@@ -27,7 +27,7 @@ public enum ClassificacaoIndicativa {
         return label;
     }
 
-    public static ClassificacaoIndicativa valueOf(Integer id) throws IllegalArgumentException {
+    public static ClassificacaoIndicativa fromId(Integer id) throws IllegalArgumentException {
         if (id == null)
             return null;
         for (ClassificacaoIndicativa classificacao : ClassificacaoIndicativa.values()) {
