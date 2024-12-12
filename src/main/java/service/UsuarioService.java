@@ -21,5 +21,8 @@ public interface UsuarioService {
 
     UsuarioResponceDTO findById(long id);
 
-    UsuarioResponceDTO findByUsernameAndSenha(String login, String senha, Boolean administrador);
+    UsuarioResponceDTO findByUsernameAndSenha(String login, String senha);
+
+    UsuarioResponceDTO updateprivilege (String nameAdm , Long idUserUpdate);
+
 }

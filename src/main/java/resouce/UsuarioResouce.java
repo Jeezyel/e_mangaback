@@ -11,12 +11,19 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import model.Perfil;
+import model.Usuario;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
+import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.consumer.JwtConsumer;
 import service.FileService;
 import service.UsuarioService;
 import util.JwtUtils;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+
+import java.util.Collections;
 
 @Path("/usuario")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -31,6 +38,9 @@ public class UsuarioResouce {
 
     @Inject
     JwtUtils jwtUtils;
+
+
+
 
     private static final Logger LOG = Logger.getLogger(UsuarioResouce.class);
 
@@ -50,7 +60,7 @@ public class UsuarioResouce {
             LOG.info("isAdminRequest: " + isAdminRequest);
 
             // Se o novo usuário é administrador e o requisitante não for, lança erro
-            if (usuarioDTO.administrador() != null && usuarioDTO.administrador() && !isAdminRequest) {
+            if (usuarioDTO.perfil() != null && usuarioDTO.perfil().equals(Collections.singleton(Perfil.ADMIN))  && isAdminRequest) {
                 return Response.status(Response.Status.FORBIDDEN)
                         .entity("{\"error\": \"Somente administradores podem criar novos administradores.\"}")
                         .type(MediaType.APPLICATION_JSON)
@@ -70,9 +80,20 @@ public class UsuarioResouce {
     @PUT
     @Path("/update/{id}")
     @Transactional
-    public Response update(@PathParam("id") Long id, UsuarioDTO usuarioDTO) {
+    public Response update(@PathParam("id") Long id, UsuarioDTO usuarioDTO, @HeaderParam("Authorization") String authToken) {
         LOG.info("Atualiza um usuario.");
         try {
+            // Valida se o token pertence a um administrador
+            boolean isAdminRequest = jwtUtils.isAdmin(authToken);
+            LOG.info("isAdminRequest: " + isAdminRequest);
+
+            // Se o novo usuário é administrador e o requisitante não for, lança erro
+            if (usuarioDTO.perfil() != null && usuarioDTO.perfil().equals(Collections.singleton(Perfil.ADMIN)) && isAdminRequest) {
+                return Response.status(Response.Status.FORBIDDEN)
+                        .entity("{\"error\": \"Somente administradores podem torna-lo um novo administradores.\"}")
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            }
             usuarioService.update(id, usuarioDTO);
             return Response.status(Response.Status.NO_CONTENT).build();
         } catch (ConstraintViolationException e) {
@@ -86,6 +107,7 @@ public class UsuarioResouce {
     @Path("/delete/{id}")
     @Transactional
     public Response DeleteById(@PathParam("id") Long id){
+        usuarioService.delete(id);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
@@ -114,5 +136,17 @@ public class UsuarioResouce {
         Response.ResponseBuilder response = Response.ok(fileService.download(nomeImagem));
         response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
         return response.build();
+    }
+
+    @PUT
+    @Path("/updateprivilege/{idUserUpdate}")
+    @Transactional
+    public Response updateprivilege (@PathParam("idUserUpdate") Long idUserUpdate, @HeaderParam("Authorization") String authToken){
+        LOG.info("Authorization: "+ authToken);
+
+        Usuario toke = jwtUtils.getUsuarioFromToken(authToken);
+
+        LOG.info("toke maluco: "+toke.getUsername());
+        return null;
     }
 }

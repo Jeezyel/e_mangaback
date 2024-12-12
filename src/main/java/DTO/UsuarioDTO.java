@@ -1,10 +1,12 @@
 package DTO;
 
 import jakarta.validation.constraints.NotBlank;
-import model.Endereco;
-import model.Telefone;
+import jakarta.validation.constraints.NotNull;
+import jakarta.ws.rs.DefaultValue;
+import model.Perfil;
 
 import java.util.List;
+import java.util.Set;
 
 public record UsuarioDTO(
         @NotBlank(message = "O nome deve ser informdo ")
@@ -15,11 +17,11 @@ public record UsuarioDTO(
 
         List<Long> telefone,
 
-        @NotBlank (message = "O endereco deve ser informdo ")
+        @NotNull(message = "O endereco deve ser informdo ")
         List<Long> endereco,
 
-        @NotBlank (message = "deve informar se o usuario e administrador ")
-        Boolean administrador,
+        @DefaultValue("User")
+        Set<Perfil> perfil,
 
         @NotBlank (message = "O username deve ser informado ")
         String username,

@@ -20,10 +20,11 @@ public class UsuarioRepository implements PanacheRepository<Usuario> {
         return find("UPPER(nome) LIKE ?1 ", "%"+nome.toUpperCase()+"%").firstResult();
     }
     
-    public Usuario findByUsernameAndSenha(String username, String senha, Boolean administrador){
-        if (username == null || senha == null || administrador == null)
+
+    public Usuario findByUsernameAndSenha(String username, String senha){
+        if (username == null || senha == null)
             return null;
-            
-        return find("username = ?1 AND senha = ?2 AND administrador = ?3" , username, senha, administrador).firstResult();
+
+        return find("username = ?1 AND senha = ?2 ", username, senha).firstResult();
     }
 }

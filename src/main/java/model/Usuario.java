@@ -1,17 +1,18 @@
 package model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Usuario extends DefaultEntity{
 
     private String nome;
     private String email;
-    private boolean administrador;
+
+    @Enumerated(EnumType.STRING)
+    private Set<Perfil> perfil;
 
     private String senha;
 
@@ -67,12 +68,12 @@ public class Usuario extends DefaultEntity{
         this.endereco = endereco;
     }
 
-    public boolean isAdministrador() {
-        return administrador;
+    public Set<Perfil> getPerfil() {
+        return perfil;
     }
 
-    public void setAdministrador(boolean administrador) {
-        this.administrador = administrador;
+    public void setPerfil(Set<Perfil> perfil) {
+        this.perfil = perfil;
     }
 
     public String getUsername() {

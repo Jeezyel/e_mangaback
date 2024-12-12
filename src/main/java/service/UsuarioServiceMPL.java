@@ -7,10 +7,12 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import model.Endereco;
+import model.Perfil;
 import model.Telefone;
 import model.Usuario;
 import DTO.EditoraDTO;
@@ -48,10 +50,10 @@ public class UsuarioServiceMPL implements UsuarioService{
     public UsuarioResponceDTO create(UsuarioDTO usuarioDTO, Boolean isAdminRequest) {
         
         // Por padrão, todos os usuários são clientes
-        boolean isAdmin = usuarioDTO.administrador() != null ? usuarioDTO.administrador() : false;
+        Set<Perfil> isAdmin = usuarioDTO.perfil() != null ? usuarioDTO.perfil() : Perfil.perfilSet(null) ;
 
         // Verifica se a requisição tem permissão para criar administradores
-        if (isAdmin && !isAdminRequest){
+        if (isAdmin.equals(Collections.singleton(Perfil.ADMIN)) && !isAdminRequest){
             throw new RuntimeException("Somente administradores podem criar novos administradores.");
         }
 
@@ -60,7 +62,7 @@ public class UsuarioServiceMPL implements UsuarioService{
         entity.setEmail(usuarioDTO.email());
         entity.setTelefone(telefoneList(usuarioDTO.telefone()));
         entity.setEndereco(enderecolist(usuarioDTO.endereco()));
-        entity.setAdministrador(isAdmin);
+        entity.setPerfil(usuarioDTO.perfil());
         entity.setUsername(usuarioDTO.username());
         entity.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
 
@@ -79,7 +81,7 @@ public class UsuarioServiceMPL implements UsuarioService{
         entity.setEmail(usuarioDTO.email());
         entity.setTelefone(telefoneList(usuarioDTO.telefone()));
         entity.setEndereco(enderecolist(usuarioDTO.endereco()));
-        entity.setAdministrador(usuarioDTO.administrador());
+        entity.setPerfil(usuarioDTO.perfil());
         entity.setUsername(usuarioDTO.username());
         entity.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
 
@@ -97,14 +99,6 @@ public class UsuarioServiceMPL implements UsuarioService{
     public UsuarioResponceDTO findById(long id) {
 
         return UsuarioResponceDTO.valueOf(usuarioRepository.findById(id));
-    }
-
-    private void validar(UsuarioDTO usuarioDTO) throws ConstraintViolationException {
-        Set<ConstraintViolation<UsuarioDTO>> violations = validator.validate(usuarioDTO);
-        if (!violations.isEmpty())
-            throw new ConstraintViolationException(violations);
-
-
     }
 
     private List<Telefone> telefoneList(List<Long> idstelefones){
@@ -130,13 +124,34 @@ public class UsuarioServiceMPL implements UsuarioService{
     }
 
     @Override
-    public UsuarioResponceDTO findByUsernameAndSenha(String username, String senha, Boolean administrador) {
-    if (username == null || senha == null || administrador == null)
+    public UsuarioResponceDTO findByUsernameAndSenha(String username, String senha) {
+    if (username == null || senha == null )
         return null;
 
         // Use o repositório para realizar a busca
-        Usuario usuario = usuarioRepository.findByUsernameAndSenha(username, senha, administrador);
+        Usuario usuario = usuarioRepository.findByUsernameAndSenha(username, senha);
         return usuario != null ? UsuarioResponceDTO.valueOf(usuario) : null;
     }
 
+    @Override
+    public UsuarioResponceDTO updateprivilege(String nameAdm, Long idUserUpdate) {
+        Usuario userAdm = usuarioRepository.findByNome(nameAdm);
+        Usuario usuario = usuarioRepository.findById(idUserUpdate);
+
+        if (userAdm.getPerfil().equals("Admin")){
+            usuario.setPerfil(Collections.singleton(Perfil.ADMIN));
+        }
+
+        usuarioRepository.persist(usuario);
+
+        return UsuarioResponceDTO.valueOf(usuario);
+    }
+
+    private void validar(UsuarioDTO usuarioDTO) throws ConstraintViolationException {
+        Set<ConstraintViolation<UsuarioDTO>> violations = validator.validate(usuarioDTO);
+        if (!violations.isEmpty())
+            throw new ConstraintViolationException(violations);
+
+
+    }
 }

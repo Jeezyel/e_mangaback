@@ -1,6 +1,7 @@
 package DTO;
 
 import model.Endereco;
+import model.Perfil;
 import model.Telefone;
 import model.Usuario;
 
@@ -19,7 +20,7 @@ public record UsuarioResponceDTO(
 
         List<Endereco> endereco,
 
-        boolean administrador, 
+        Set<Perfil> perfil,
         
         String username,
 
@@ -34,7 +35,7 @@ public record UsuarioResponceDTO(
                         usuario.getEmail(),
                         usuario.getTelefone(),
                         usuario.getEndereco(),
-                        usuario.isAdministrador(),
+                        usuario.getPerfil(),
                         usuario.getUsername(),
                         usuario.getSenha()
                 );
