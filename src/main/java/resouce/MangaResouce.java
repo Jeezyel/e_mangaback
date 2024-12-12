@@ -7,6 +7,8 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import model.ClassificacaoIndicativa;
+
 import org.jboss.logging.Logger;
 import service.MangaService;
 import java.util.List;
@@ -94,6 +96,13 @@ public class MangaResouce {
             return Response.status(Response.Status.NOT_FOUND).entity("Mangá não encontrado").build();
         }
     }
+
+    @GET
+    @Path("/classificacaoIndicativa")
+    public Response getClassificacoesIndicativas() {
+        return Response.ok(ClassificacaoIndicativa.values()).build();
+    }
+
 
     @GET
     @Path("/count")
