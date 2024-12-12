@@ -13,6 +13,8 @@ public class Manga extends DefaultEntity {
     @Size(max = 100)
     private String nome;
 
+    private String nomeImagem;
+
     @NotNull
     @Column(nullable = false)
     private BigDecimal valor;
@@ -46,6 +48,15 @@ public class Manga extends DefaultEntity {
     private Integer estoque;
 
     // Getters e Setters
+
+
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
+
+    public void setNomeImagem(String nomeImagem) {
+        this.nomeImagem = nomeImagem;
+    }
 
     public String getNome() {
         return nome;

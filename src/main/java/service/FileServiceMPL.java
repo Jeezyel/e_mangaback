@@ -14,7 +14,9 @@ import java.util.UUID;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import model.Manga;
 import model.Usuario;
+import repository.MangaRepository;
 import repository.UsuarioRepository;
 import validation.ValidationException;
 
@@ -30,10 +32,26 @@ public class FileServiceMPL implements FileService {
     @Inject
     UsuarioRepository usuarioRepository;
 
+    @Inject
+    MangaRepository mangaRepository;
+
     @Override
     @Transactional
     public void salvar(Long id, String nomeImagem, byte[] imagem) {
         Usuario consulta = usuarioRepository.findById(id);
+
+        try {
+            String novoNomeImagem = salvarImagem(imagem, nomeImagem);
+            consulta.setNomeImagem(novoNomeImagem);
+            // excluir a imagem antiga (trabalho pra quem????)
+        } catch (IOException e) {
+            throw new ValidationException("imagem", e.toString());
+        }
+    }
+
+    @Override
+    public void salvarManga(Long id, String nomeImagem, byte[] imagem) {
+        Manga consulta = mangaRepository.findById(id);
 
         try {
             String novoNomeImagem = salvarImagem(imagem, nomeImagem);

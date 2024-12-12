@@ -1,13 +1,18 @@
 package resouce;
 
 import aplication.Result;
+import form.ConsultaImageForm;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import model.ClassificacaoIndicativa;
+
 import org.jboss.logging.Logger;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import service.FileService;
 import service.MangaService;
 import java.util.List;
 
@@ -23,6 +28,9 @@ public class MangaResouce {
 
     @Inject
     MangaService mangaService;
+
+    @Inject
+    FileService fileService;
 
     @GET
     @Path("/")
@@ -96,6 +104,13 @@ public class MangaResouce {
     }
 
     @GET
+    @Path("/classificacaoIndicativa")
+    public Response getClassificacoesIndicativas() {
+        return Response.ok(ClassificacaoIndicativa.values()).build();
+    }
+
+
+    @GET
     @Path("/count")
     public long count() {
         return mangaService.count();
@@ -110,5 +125,26 @@ public class MangaResouce {
         } catch (RuntimeException e) {
             return Response.status(Response.Status.NOT_FOUND).entity("Mangá não encontrado").build();
         }
+    }
+
+    @PATCH
+    @Path("/image/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response salvarImagem(@MultipartForm ConsultaImageForm form) {
+        LOG.info("nome imagem: "+form.getNomeImagem());
+        System.out.println("nome imagem: "+form.getNomeImagem());
+
+        fileService.salvar(form.getId(), form.getNomeImagem(), form.getImagem());
+        return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/image/download/{nomeImagem}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response download(@PathParam("nomeImagem") String nomeImagem) {
+        System.out.println(nomeImagem);
+        Response.ResponseBuilder response = Response.ok(fileService.download(nomeImagem));
+        response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
+        return response.build();
     }
 }
