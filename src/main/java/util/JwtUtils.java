@@ -3,6 +3,7 @@ package util;
 import io.smallrye.jwt.auth.principal.JWTParser;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import model.Perfil;
 import model.Usuario;
 
 import java.util.List;
@@ -33,9 +34,7 @@ public class JwtUtils {
             // Extrai os claims necessários
             String nome = jwtClaims.getClaim("nome");
             String email = jwtClaims.getClaim("email");
-            List<Long> telefone = jwtClaims.getClaim("telefone");
-            List<Long> endereco = jwtClaims.getClaim("endereco");
-            Boolean administrador = isAdmin(token); // Usa o método isAdmin
+            String perfil = jwtClaims.getClaim("perfil");
             String username = jwtClaims.getClaim("preferred_username"); // Claim comum para usernames
             String senha = jwtClaims.getClaim("senha"); // Use apenas se necessário (não recomendado armazenar senhas em tokens)
 
@@ -43,7 +42,7 @@ public class JwtUtils {
             Usuario usuario = new Usuario();
             usuario.setNome(nome);
             usuario.setEmail(email);
-            usuario.setAdministrador(administrador);
+            usuario.setPerfil(Perfil.perfilSet(perfil));
             usuario.setUsername(username);
             usuario.setSenha(senha);
 

@@ -1,9 +1,8 @@
 package DTO;
 
 public record AuthUsuarioDTO(
-    String username, 
-    String senha, 
-    Boolean administrador
+        String login,
+        String senha
 ) {}
 
 

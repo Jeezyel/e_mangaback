@@ -3,6 +3,12 @@ package service;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.jose4j.jwt.MalformedClaimException;
+import org.jose4j.jwt.consumer.JwtConsumer;
+import org.jose4j.jwt.consumer.JwtConsumerBuilder;
+import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.consumer.InvalidJwtException;
+
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
@@ -36,6 +42,7 @@ public class HashServiceImpl implements HashService {
 
         // Exemplos de hash
         System.out.println("Hash para '123456': " + hashService.getHashSenha("123456"));
-        System.out.println("Hash para '123457': " + hashService.getHashSenha("123457"));
+        System.out.println("Hash para '123': " + hashService.getHashSenha("123"));
+
     }
 }

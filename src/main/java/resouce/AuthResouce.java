@@ -2,6 +2,7 @@ package resouce;
 
 import DTO.AuthUsuarioDTO;
 import DTO.UsuarioResponceDTO;
+import org.jboss.logging.Logger;
 import service.HashService;
 import service.JwtService;
 import service.UsuarioService;
@@ -20,6 +21,8 @@ import jakarta.ws.rs.core.Response.Status;
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthResouce {
 
+    private static final Logger LOG = Logger.getLogger(AuthResouce.class);
+
     @Inject
     HashService hashService;
 
@@ -31,30 +34,20 @@ public class AuthResouce {
 
     @POST
     public Response login(AuthUsuarioDTO authDTO) {
-        try {
+        LOG.info("pegando o hesh da senha");
+        String hash = hashService.getHashSenha(authDTO.senha());
 
-            String hash = hashService.getHashSenha(authDTO.senha());
-            
-            UsuarioResponceDTO usuario = usuarioService.findByUsernameAndSenha(
-                authDTO.username(), 
-                hash, 
-                authDTO.administrador()
-            );
-            // Verifica se o usuário foi encontrado
-            if (usuario == null) {
-                return Response.status(Status.NOT_FOUND)
-                    .entity("Usuário não encontrado ou perfil incorreto").build();
-            }
-            // Gera o token JWT e retorna o usuário e o token
-            String token = jwtService.generateJwt(usuario);
-            return Response.ok(usuario)
-                .header("Authorization", token)
-                .build();
-        } catch (Exception e) {
+        LOG.info("buscando no banco o usuario ");
+        UsuarioResponceDTO usuario = usuarioService.findByUsernameAndSenha(authDTO.login(), hash);
 
-            e.printStackTrace();
-            return Response.status(Status.INTERNAL_SERVER_ERROR)
-            .entity("Erro interno no sistema: " + e.getMessage()).build();
+        if (usuario == null) {
+            LOG.info("usuario n encontrado ");
+            return Response.status(Status.NOT_FOUND)
+                    .entity("Usuario não encontrado").build();
         }
-    }    
+        return Response.ok(usuario)
+                .header("Authorization", jwtService.generateJwt(usuario))
+                .build();
+
+    }
 }
