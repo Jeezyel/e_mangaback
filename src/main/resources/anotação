@@ -1,8 +1,3 @@
-implementar a autneticação
-
-implementar upload de imagem em "manga e usuario"
-
-criar o resouce endereco
 
 
 ver o problea de pq não esta deixando criar outor usuario adm
@@ -11,9 +6,13 @@ colocar os cadeado nos endpoint o que o usuario pode usar ou não
 
 add os campus preço e estoque em manga
 
+colocar a cascata no estado e ralacionados
+
 implementar pagamento
 Implementar cartão, pix
 implementar o pedido e salvar o pedido
+
+arrumar os deleteById
 
     
 

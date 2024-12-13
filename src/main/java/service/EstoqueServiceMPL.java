@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
+import jakarta.ws.rs.core.Response;
 import model.Estoque;
 import model.Usuario;
 import repository.EstoqueRepository;
@@ -86,5 +87,9 @@ public class EstoqueServiceMPL implements EstoqueService{
             throw new ConstraintViolationException(violations);
 
 
+    }
+
+    public Response testeEstoque(){
+        return estoqueRepository.findByListaNomeMangar("Naruto").isEmpty()? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(estoqueRepository.findByListaNomeMangar("Naruto")).build();
     }
 }
