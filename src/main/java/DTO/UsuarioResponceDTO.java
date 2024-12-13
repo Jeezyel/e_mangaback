@@ -14,6 +14,8 @@ public record UsuarioResponceDTO(
 
         String nome,
 
+        String nomeImagem,
+
         String email,
 
         List<Telefone> telefone,
@@ -32,6 +34,7 @@ public record UsuarioResponceDTO(
                 return new UsuarioResponceDTO(
                         usuario.getId(),
                         usuario.getNome(),
+                        usuario.getNomeImagem(),
                         usuario.getEmail(),
                         usuario.getTelefone(),
                         usuario.getEndereco(),

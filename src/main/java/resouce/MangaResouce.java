@@ -132,9 +132,8 @@ public class MangaResouce {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagem(@MultipartForm ConsultaImageForm form) {
         LOG.info("nome imagem: "+form.getNomeImagem());
-        System.out.println("nome imagem: "+form.getNomeImagem());
 
-        fileService.salvar(form.getId(), form.getNomeImagem(), form.getImagem());
+        fileService.salvarManga(form.getId(), form.getNomeImagem(), form.getImagem());
         return Response.noContent().build();
     }
 

@@ -16,12 +16,16 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import model.Manga;
 import model.Usuario;
+import org.jboss.logging.Logger;
 import repository.MangaRepository;
 import repository.UsuarioRepository;
+import resouce.MangaResouce;
 import validation.ValidationException;
 
 @ApplicationScoped
 public class FileServiceMPL implements FileService {
+
+    private static final Logger LOG = Logger.getLogger(FileServiceMPL.class);
 
     // ex. /user/janio/quarkus/images/usuario/
     private final String PATH_USER = System.getProperty("user.home")
@@ -50,10 +54,12 @@ public class FileServiceMPL implements FileService {
     }
 
     @Override
+    @Transactional
     public void salvarManga(Long id, String nomeImagem, byte[] imagem) {
         Manga consulta = mangaRepository.findById(id);
 
         try {
+
             String novoNomeImagem = salvarImagem(imagem, nomeImagem);
             consulta.setNomeImagem(novoNomeImagem);
             // excluir a imagem antiga (trabalho pra quem????)

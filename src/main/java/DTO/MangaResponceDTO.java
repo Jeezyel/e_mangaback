@@ -11,6 +11,7 @@ public record MangaResponceDTO(
 
         long idManga,
         String nome,
+        String nomeImagem,
         BigDecimal valor,
         String editora,
         Set<String> genero,
@@ -25,6 +26,7 @@ public record MangaResponceDTO(
        return new MangaResponceDTO(
                manga.getId(),
                manga.getNome(),
+               manga.getNomeImagem(),
                manga.getValor(),
                manga.getEditora().getNome(),
                manga.getGenero().stream()
