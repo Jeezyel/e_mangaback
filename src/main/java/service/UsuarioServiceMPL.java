@@ -1,7 +1,9 @@
 package service;
 
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
@@ -47,22 +49,17 @@ public class UsuarioServiceMPL implements UsuarioService{
     }
 
     @Override
-    public UsuarioResponceDTO create(UsuarioDTO usuarioDTO, Boolean isAdminRequest) {
-        
-        // Por padrão, todos os usuários são clientes
-        Set<Perfil> isAdmin = usuarioDTO.perfil() != null ? usuarioDTO.perfil() : Perfil.perfilSet(null) ;
+    public UsuarioResponceDTO create(UsuarioDTO usuarioDTO) {
+        validar(usuarioDTO);
 
-        // Verifica se a requisição tem permissão para criar administradores
-        if (isAdmin.equals(Collections.singleton(Perfil.ADMIN)) && !isAdminRequest){
-            throw new RuntimeException("Somente administradores podem criar novos administradores.");
-        }
 
         Usuario entity = new Usuario();
+
         entity.setNome(usuarioDTO.nome());
         entity.setEmail(usuarioDTO.email());
         entity.setTelefone(telefoneList(usuarioDTO.telefone()));
         entity.setEndereco(enderecolist(usuarioDTO.endereco()));
-        entity.setPerfil(usuarioDTO.perfil());
+        entity.setPerfil(Perfil.perfilSet("User"));
         entity.setUsername(usuarioDTO.username());
         entity.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
 
@@ -81,7 +78,6 @@ public class UsuarioServiceMPL implements UsuarioService{
         entity.setEmail(usuarioDTO.email());
         entity.setTelefone(telefoneList(usuarioDTO.telefone()));
         entity.setEndereco(enderecolist(usuarioDTO.endereco()));
-        entity.setPerfil(usuarioDTO.perfil());
         entity.setUsername(usuarioDTO.username());
         entity.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
 
@@ -134,12 +130,16 @@ public class UsuarioServiceMPL implements UsuarioService{
     }
 
     @Override
+    @Transactional
     public UsuarioResponceDTO updateprivilege(String nameAdm, Long idUserUpdate) {
-        Usuario userAdm = usuarioRepository.findByNome(nameAdm);
+        Usuario userAdm = usuarioRepository.findByUserName(nameAdm);
         Usuario usuario = usuarioRepository.findById(idUserUpdate);
 
-        if (userAdm.getPerfil().equals("Admin")){
-            usuario.setPerfil(Collections.singleton(Perfil.ADMIN));
+        if (userAdm != null && usuario != null){
+            Log.info("ENTRO ONDE DEVERIA");
+            if (true)
+                usuario.setPerfil(Perfil.perfilSet("Admin"));
+
         }
 
         usuarioRepository.persist(usuario);

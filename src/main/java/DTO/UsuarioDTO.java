@@ -20,9 +20,6 @@ public record UsuarioDTO(
         @NotNull(message = "O endereco deve ser informdo ")
         List<Long> endereco,
 
-        @DefaultValue("User")
-        Set<Perfil> perfil,
-
         @NotBlank (message = "O username deve ser informado ")
         String username,
 

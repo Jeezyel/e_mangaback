@@ -38,10 +38,10 @@ public enum Perfil {
     }
 
     public static Set<Perfil> perfilSet (String perfil){
-        if (perfil.toUpperCase() == "ADMIN" || perfil != null)
-            return Collections.singleton(Perfil.ADMIN);
+        if (perfil.equals("User"))
+            return Collections.singleton(Perfil.USER);
 
+        return Collections.singleton(Perfil.ADMIN);
 
-        return Collections.singleton(Perfil.USER);
     }
 }

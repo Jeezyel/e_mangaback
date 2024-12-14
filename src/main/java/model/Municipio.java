@@ -1,10 +1,7 @@
 package model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Municipio extends DefaultEntity{
@@ -13,7 +10,7 @@ public class Municipio extends DefaultEntity{
     private String nome;
 
     @JoinColumn(name = "idEstado")
-    @ManyToOne
+    @ManyToOne()
     private Estado estado;
 
     public String getNome() {

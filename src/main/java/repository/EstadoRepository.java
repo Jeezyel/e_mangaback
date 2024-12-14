@@ -19,4 +19,7 @@ public class EstadoRepository implements PanacheRepository<Estado> {
             return null;
         return find("UPPER(nome) LIKE ?1 ", "%"+nome.toUpperCase()+"%").firstResult();
     }
+    //public void  deletById(long id){
+        //delete("DELETE FROM public.estado WHERE estado.id = id",id);
+    //}
 }
