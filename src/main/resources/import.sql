@@ -211,16 +211,16 @@ INSERT INTO public.idioma(idioma, sigla) VALUES
 
 INSERT INTO public.manga(nome, nomeimagem, valor, idEditora, idFormato, idIdioma, classificacaoindicativa, estoque)
 VALUES
-  ('Naruto','panda.png', 35.90, 1, 1, 1, 1, 50),
-  ('One Piece','panda.png', 40.00, 1, 1, 1, 1, 75),
-  ('Attack on Titan','panda.png', 45.00, 2, 2, 1, 1, 30),
-  ('Dragon Ball Z','panda.png', 30.00, 1, 1, 1, 1, 60),
-  ('Demon Slayer','panda.png', 38.00, 2, 1, 1, 1, 40),
-  ('My Hero Academia','panda.png', 42.00, 3, 2, 1, 1, 70),
-  ('Death Note','panda.png', 33.50, 1, 1, 1, 1, 45),
-  ('Fullmetal Alchemist','panda.png', 39.99, 3, 2, 1, 1, 55),
-  ('Bleach','panda.png', 36.50, 1, 1, 1, 1, 65),
-  ('Tokyo Revengers','panda.png', 41.50, 2, 1, 1, 1, 80);
+  ('Naruto','manga.png', 35.90, 1, 1, 1, 1, 50),
+  ('One Piece','manga.png', 40.00, 1, 1, 1, 1, 75),
+  ('Attack on Titan','manga.png', 45.00, 2, 2, 1, 1, 30),
+  ('Dragon Ball Z','manga.png', 30.00, 1, 1, 1, 1, 60),
+  ('Demon Slayer','manga.png', 38.00, 2, 1, 1, 1, 40),
+  ('My Hero Academia','manga.png', 42.00, 3, 2, 1, 1, 70),
+  ('Death Note','manga.png', 33.50, 1, 1, 1, 1, 45),
+  ('Fullmetal Alchemist','manga.png', 39.99, 3, 2, 1, 1, 55),
+  ('Bleach','manga.png', 36.50, 1, 1, 1, 1, 65),
+  ('Tokyo Revengers','manga.png', 41.50, 2, 1, 1, 1, 80);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
