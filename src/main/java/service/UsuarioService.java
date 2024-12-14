@@ -9,7 +9,7 @@ import DTO.UsuarioResponceDTO;
 @ApplicationScoped
 public interface UsuarioService {
 
-    List<UsuarioResponceDTO> getAll();
+    List<UsuarioResponceDTO> getAll(int page , int size);
 
     UsuarioResponceDTO create(UsuarioDTO usuarioDTO, Boolean isAdminRequest);
 
@@ -24,5 +24,7 @@ public interface UsuarioService {
     UsuarioResponceDTO findByUsernameAndSenha(String login, String senha);
 
     UsuarioResponceDTO updateprivilege (String nameAdm , Long idUserUpdate);
+
+    long count();
 
 }

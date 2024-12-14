@@ -46,8 +46,9 @@ public class UsuarioResouce {
 
     @GET
     @Path("/")
-    public Response getAll(){
-        return Response.ok(usuarioService.getAll()).build();
+    public Response getAll(@QueryParam("page") @DefaultValue("0") int page
+                            ,@QueryParam("size")  @DefaultValue("100") int size){
+        return Response.ok(usuarioService.getAll(page, size)).build();
     }
 
     @POST
@@ -136,6 +137,13 @@ public class UsuarioResouce {
         Response.ResponseBuilder response = Response.ok(fileService.download(nomeImagem));
         response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
         return response.build();
+    }
+
+    @GET
+    @Path("/count")
+    public long count() {
+        LOG.info("Conta usuario.");
+        return usuarioService.count();
     }
 
     @PUT

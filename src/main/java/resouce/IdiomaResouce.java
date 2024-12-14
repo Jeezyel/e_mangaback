@@ -26,7 +26,7 @@ public class IdiomaResouce {
 
     @GET
     @Path("/")
-    public Response getAll(@QueryParam("index") @DefaultValue("0") int page , @QueryParam("size")  @DefaultValue("100") int size) {
+    public Response getAll(@QueryParam("page") @DefaultValue("0") int page , @QueryParam("size")  @DefaultValue("100") int size) {
         return Response.ok(idiomaService.getAll(page, size)).build();
     }
 

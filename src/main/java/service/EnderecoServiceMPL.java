@@ -35,9 +35,9 @@ public class EnderecoServiceMPL implements EnderecoService{
     Validator validator;
 
     @Override
-    public List<EnderecoResponceDTO> getAll() {
+    public List<EnderecoResponceDTO> getAll(int page , int size) {
 
-        List<Endereco> list = enderecoRepository.listAll();
+        List<Endereco> list = enderecoRepository.findAll().page(page,size).list();
         return list.stream().map(EnderecoResponceDTO::valueOf).collect(Collectors.toList());
 
     }

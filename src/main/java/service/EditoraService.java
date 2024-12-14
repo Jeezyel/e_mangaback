@@ -10,7 +10,7 @@ import java.util.List;
 public interface EditoraService {
 
     // recursos basicos
-    List<EditoraResponceDTO> getAll();
+    List<EditoraResponceDTO> getAll(int page , int size);
 
 
     EditoraResponceDTO create(EditoraDTO editoraDTO);
@@ -20,6 +20,8 @@ public interface EditoraService {
     void delete(Long id);
 
     // recursos extras
+
+    long count();
 
     List<EditoraResponceDTO> search(int page , int size, String nome);
 

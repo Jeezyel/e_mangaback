@@ -31,9 +31,9 @@ public class MunicipiosResouce {
 
     @GET
     @Path("/")
-    public Response getAll(@QueryParam("index") @DefaultValue("0") int index ,@QueryParam("size")  @DefaultValue("100") int size) {
+    public Response getAll(@QueryParam("page") @DefaultValue("0") int page ,@QueryParam("size")  @DefaultValue("100") int size) {
         LOG.info("buscando todos os municipios." );
-        return Response.ok(municipioService.getAll(index,size)).build();
+        return Response.ok(municipioService.getAll(page,size)).build();
     }
 
     @POST

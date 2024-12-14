@@ -23,19 +23,21 @@ import java.util.List;
 public class EditoraResouce {
     @Inject
     EditoraService editoraService;
+
     private static final Logger LOG = Logger.getLogger(EditoraResouce.class);
 
     @GET
     @Path("/")
-    public List<EditoraResponceDTO> getAll() {
-        return editoraService.getAll();
+    public Response getAll(@QueryParam("page") @DefaultValue("0") int page
+                                            ,@QueryParam("size")  @DefaultValue("100") int size) {
+        return Response.ok(editoraService.getAll(page, size)).build();
     }
 
     //para crar a tela com os manga
     //retorna tudo sem ordenação com paginação
     @GET
     @Path("/search/{nome}")
-    public Response search(@QueryParam("index") @DefaultValue("0") int page,
+    public Response search(@QueryParam("page") @DefaultValue("0") int page,
                            @QueryParam("size")  @DefaultValue("100") int size,
                            @PathParam("nome") String nome) {
         return Response.ok(editoraService.search(page, size, nome)).build();
@@ -70,9 +72,7 @@ public class EditoraResouce {
 
 
     @PUT
-    @Path("/update/{id}")/*
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)*/
+    @Path("/update/{id}")
     @Transactional
     public Response update(@PathParam("id") Long id, EditoraDTO editoraDTO) {
         LOG.info("Atualiza um contato.");
@@ -86,8 +86,10 @@ public class EditoraResouce {
         }
     }
 
-
-
-
+    @GET
+    @Path("/count")
+    public Response count (){
+        return Response.ok(editoraService.count()).build();
+    }
 
 }

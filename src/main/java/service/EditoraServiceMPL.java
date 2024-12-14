@@ -26,16 +26,14 @@ public class EditoraServiceMPL implements EditoraService{
     @Inject
     EnderecoRepository enderecoRepository;
 
-
-
     @Inject
     Validator validator;
 
 
     @Override
-    public List<EditoraResponceDTO> getAll() {
+    public List<EditoraResponceDTO> getAll(int page , int size) {
 
-        List<Editora> list = editoraRepository.listAll();
+        List<Editora> list = editoraRepository.findAll().page(page,size).list();
         return list.stream().map(EditoraResponceDTO::new).collect(Collectors.toList());
     }
 
@@ -89,6 +87,12 @@ public class EditoraServiceMPL implements EditoraService{
         List<Editora> list = editoraRepository.findByNomePanache(nome).page(page,size).list();
         return list.stream().map(EditoraResponceDTO::new).collect(Collectors.toList());
     }
+
+    @Override
+    public long count() {
+        return editoraRepository.count();
+    }
+
 
     /*@Override
     public List<EditoraResponceDTO> search() {

@@ -25,10 +25,11 @@ public class EnderecoResouce {
 
     @GET
     @Path("/")
-    public List<EnderecoResponceDTO> getAll() {
+    public List<EnderecoResponceDTO> getAll(@QueryParam("page") @DefaultValue("0") int page
+                                            ,@QueryParam("size")  @DefaultValue("100") int size) {
         LOG.info("Buscando todos os estados.");
         LOG.debug("Debug de busca de lista de estados.");
-        return enderecoService.getAll();
+        return enderecoService.getAll(page,size);
     }
 
     @GET

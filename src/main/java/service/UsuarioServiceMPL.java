@@ -41,8 +41,8 @@ public class UsuarioServiceMPL implements UsuarioService{
     HashService hashService;
 
     @Override
-    public List<UsuarioResponceDTO> getAll() {
-        List<Usuario> list = usuarioRepository.listAll();
+    public List<UsuarioResponceDTO> getAll(int page , int size) {
+        List<Usuario> list = usuarioRepository.findAll().page(page,size).list();
         return list.stream().map(UsuarioResponceDTO::valueOf).toList();
     }
 
@@ -145,6 +145,11 @@ public class UsuarioServiceMPL implements UsuarioService{
         usuarioRepository.persist(usuario);
 
         return UsuarioResponceDTO.valueOf(usuario);
+    }
+
+    @Override
+    public long count() {
+        return usuarioRepository.count();
     }
 
     private void validar(UsuarioDTO usuarioDTO) throws ConstraintViolationException {

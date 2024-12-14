@@ -34,7 +34,7 @@ public class MangaResouce {
 
     @GET
     @Path("/")
-    public Response getAll(@QueryParam("index") @DefaultValue("0") int page,
+    public Response getAll(@QueryParam("page") @DefaultValue("0") int page,
                            @QueryParam("size") @DefaultValue("100") int size) {
         return Response.ok(mangaService.getAll(page, size)).build();
     }

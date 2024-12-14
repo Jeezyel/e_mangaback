@@ -10,7 +10,7 @@ public interface EstadoService {
 
     // recursos basicos
 
-    List<EstadoResponceDTO> getAll(int index , int size);
+    List<EstadoResponceDTO> getAll(int page , int size);
 
     EstadoResponceDTO create(EstadoDTO estadosDTO);
 
