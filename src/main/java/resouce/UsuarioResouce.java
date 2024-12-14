@@ -11,6 +11,7 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import model.ClassificacaoIndicativa;
 import model.Perfil;
 import model.Usuario;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -157,4 +158,11 @@ public class UsuarioResouce {
         LOG.info("toke maluco: "+toke.getUsername());
         return null;
     }
+
+    @GET
+    @Path("/perfil")
+    public Response getPerfis() {
+        return Response.ok(Perfil.values()).build();
+    }
+
 }
