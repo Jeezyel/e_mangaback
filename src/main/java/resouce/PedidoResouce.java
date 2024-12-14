@@ -19,7 +19,7 @@ import service.FileService;
 import service.MangaService;
 import service.PedidoService;
 
-@Path("/mangas")
+@Path("/pedido")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class PedidoResouce {
