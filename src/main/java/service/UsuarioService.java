@@ -11,7 +11,7 @@ public interface UsuarioService {
 
     List<UsuarioResponceDTO> getAll(int page , int size);
 
-    UsuarioResponceDTO create(UsuarioDTO usuarioDTO, Boolean isAdminRequest);
+    UsuarioResponceDTO create(UsuarioDTO usuarioDTO);
 
     UsuarioResponceDTO update(Long id, UsuarioDTO usuarioDTO);
 

@@ -35,18 +35,24 @@ public class JwtUtils {
             String nome = jwtClaims.getClaim("nome");
             String email = jwtClaims.getClaim("email");
             String perfil = jwtClaims.getClaim("perfil");
-            String username = jwtClaims.getClaim("preferred_username"); // Claim comum para usernames
-            String senha = jwtClaims.getClaim("senha"); // Use apenas se necessário (não recomendado armazenar senhas em tokens)
+
 
             // Popula o DTO
             Usuario usuario = new Usuario();
             usuario.setNome(nome);
             usuario.setEmail(email);
             usuario.setPerfil(Perfil.perfilSet(perfil));
-            usuario.setUsername(username);
-            usuario.setSenha(senha);
-
             return usuario;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // Retorna null em caso de erro (pode lançar exceções ou usar Optional)
+        }
+    }
+
+    public String getUsuarioString(String token) {
+        try {
+            String groups = (String) jwtParser.parse(token).getClaim("perfil");
+            return groups;
         } catch (Exception e) {
             e.printStackTrace();
             return null; // Retorna null em caso de erro (pode lançar exceções ou usar Optional)

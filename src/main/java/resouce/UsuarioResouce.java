@@ -5,6 +5,7 @@ import DTO.UsuarioDTO;
 import DTO.UsuarioResponceDTO;
 import aplication.Result;
 import form.ConsultaImageForm;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
@@ -15,8 +16,6 @@ import model.Perfil;
 import model.Usuario;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
-import org.jose4j.jwt.JwtClaims;
-import org.jose4j.jwt.consumer.JwtConsumer;
 import service.FileService;
 import service.UsuarioService;
 import util.JwtUtils;
@@ -39,6 +38,9 @@ public class UsuarioResouce {
     @Inject
     JwtUtils jwtUtils;
 
+    @Inject
+    JsonWebToken jwt;
+
 
 
 
@@ -55,26 +57,14 @@ public class UsuarioResouce {
     @Path("/insert")
     @Transactional
     public Response insert(UsuarioDTO usuarioDTO, @HeaderParam("Authorization") String authToken) {
+        LOG.info("inserindo um usuario.");
         try {
-            // Valida se o token pertence a um administrador
-            boolean isAdminRequest = jwtUtils.isAdmin(authToken);
-            LOG.info("isAdminRequest: " + isAdminRequest);
-
-            // Se o novo usuário é administrador e o requisitante não for, lança erro
-            if (usuarioDTO.perfil() != null && usuarioDTO.perfil().equals(Collections.singleton(Perfil.ADMIN))  && isAdminRequest) {
-                return Response.status(Response.Status.FORBIDDEN)
-                        .entity("{\"error\": \"Somente administradores podem criar novos administradores.\"}")
-                        .type(MediaType.APPLICATION_JSON)
-                        .build();
-            }
-            UsuarioResponceDTO usuario = usuarioService.create(usuarioDTO, isAdminRequest);
-            return Response.status(Response.Status.CREATED).entity(usuario).build();
-        } catch (Exception e) {
-            LOG.error("Erro ao criar usuário: ", e);
-            return Response.status(Response.Status.BAD_REQUEST)
-                .entity("{\"error\": \"" + e.getMessage() + "\"}")
-                .type(MediaType.APPLICATION_JSON)
-                .build();
+            UsuarioResponceDTO usuario = usuarioService.create(usuarioDTO);
+            return Response.ok(usuario).build();
+        } catch (ConstraintViolationException e) {
+            Result result = new Result(e.getConstraintViolations());
+            LOG.debug("inserir de contato.");
+            return Response.status(Response.Status.NOT_FOUND).entity(result).build();
         }
     }   
 
@@ -84,19 +74,8 @@ public class UsuarioResouce {
     public Response update(@PathParam("id") Long id, UsuarioDTO usuarioDTO, @HeaderParam("Authorization") String authToken) {
         LOG.info("Atualiza um usuario.");
         try {
-            // Valida se o token pertence a um administrador
-            boolean isAdminRequest = jwtUtils.isAdmin(authToken);
-            LOG.info("isAdminRequest: " + isAdminRequest);
-
-            // Se o novo usuário é administrador e o requisitante não for, lança erro
-            if (usuarioDTO.perfil() != null && usuarioDTO.perfil().equals(Collections.singleton(Perfil.ADMIN)) && isAdminRequest) {
-                return Response.status(Response.Status.FORBIDDEN)
-                        .entity("{\"error\": \"Somente administradores podem torna-lo um novo administradores.\"}")
-                        .type(MediaType.APPLICATION_JSON)
-                        .build();
-            }
-            usuarioService.update(id, usuarioDTO);
-            return Response.status(Response.Status.NO_CONTENT).build();
+            UsuarioResponceDTO usuario = usuarioService.update(id,usuarioDTO);
+            return Response.ok(usuario).build();
         } catch (ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
             LOG.debug("Debug de updat de contato.");
@@ -147,14 +126,23 @@ public class UsuarioResouce {
     }
 
     @PUT
-    @Path("/updateprivilege/{idUserUpdate}")
     @Transactional
-    public Response updateprivilege (@PathParam("idUserUpdate") Long idUserUpdate, @HeaderParam("Authorization") String authToken){
-        LOG.info("Authorization: "+ authToken);
+    @Path("/updateprivilege/{idUserUpdate}")
+    @RolesAllowed("Admin")
+    public Response updateprivilege (@PathParam("idUserUpdate") Long idUserUpdate){
 
-        Usuario toke = jwtUtils.getUsuarioFromToken(authToken);
+        String usuarioo = jwt.getSubject();
+        LOG.info("O QUE FOI COLETADO DO TOKEN: " + usuarioo);
 
-        LOG.info("toke maluco: "+toke.getUsername());
-        return null;
+        try {
+            UsuarioResponceDTO usuario = usuarioService.updateprivilege( usuarioo, idUserUpdate);
+            return Response.ok().build();
+        }catch (Exception e){
+            LOG.error("erro ao dar privilegio: " + e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+
+
     }
 }

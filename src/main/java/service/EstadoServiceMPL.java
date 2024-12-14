@@ -3,6 +3,7 @@ package service;
 
 import DTO.EstadoDTO;
 import DTO.EstadoResponceDTO;
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -19,8 +20,6 @@ import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class EstadoServiceMPL implements EstadoService{
-    @Inject
-    MunicipioRepository municipioRepository;
 
     @Inject
     EstadoRepository estadoRepository;
@@ -71,7 +70,12 @@ public class EstadoServiceMPL implements EstadoService{
 
     @Override
     public void delete(Long id) {
-        estadoRepository.deleteById(id);
+        try {
+            estadoRepository.deleteById(id);
+        } catch (Exception e) {
+            Log.info("erro no delete: " + e.getMessage());
+        }
+
     }
 
     @Override
