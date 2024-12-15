@@ -42,9 +42,6 @@ public class UsuarioResouce {
     @Inject
     JsonWebToken jwt;
 
-
-
-
     private static final Logger LOG = Logger.getLogger(UsuarioResouce.class);
 
     @GET
@@ -98,53 +95,11 @@ public class UsuarioResouce {
         return Response.ok(usuarioService.findById(id)).build();
     }
 
-    @PATCH
-    @Path("/image/upload")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response salvarImagem(@MultipartForm ConsultaImageForm form) {
-        LOG.info("nome imagem: "+form.getNomeImagem());
-        System.out.println("nome imagem: "+form.getNomeImagem());
-
-        fileService.salvar(form.getId(), form.getNomeImagem(), form.getImagem());
-        return Response.noContent().build();
-    }
-
-    @GET
-    @Path("/image/download/{nomeImagem}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response download(@PathParam("nomeImagem") String nomeImagem) {
-        System.out.println(nomeImagem);
-        Response.ResponseBuilder response = Response.ok(fileService.download(nomeImagem));
-        response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
-        return response.build();
-    }
-
     @GET
     @Path("/count")
     public long count() {
         LOG.info("Conta usuario.");
         return usuarioService.count();
-    }
-
-    @PUT
-    @Transactional
-    @Path("/updateprivilege/{idUserUpdate}")
-    @RolesAllowed("Admin")
-    public Response updateprivilege (@PathParam("idUserUpdate") Long idUserUpdate){
-
-        String usuarioo = jwt.getSubject();
-        LOG.info("O QUE FOI COLETADO DO TOKEN: " + usuarioo);
-
-        try {
-            UsuarioResponceDTO usuario = usuarioService.updateprivilege( usuarioo, idUserUpdate);
-            return Response.ok().build();
-        }catch (Exception e){
-            LOG.error("erro ao dar privilegio: " + e.getMessage());
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-
-
     }
 
     @GET

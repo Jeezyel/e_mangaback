@@ -34,11 +34,12 @@ public class AuthResouce {
 
     @POST
     public Response login(AuthUsuarioDTO authDTO) {
+
         LOG.info("pegando o hesh da senha");
         String hash = hashService.getHashSenha(authDTO.senha());
 
         LOG.info("buscando no banco o usuario ");
-        UsuarioResponceDTO usuario = usuarioService.findByUsernameAndSenha(authDTO.login(), hash);
+        UsuarioResponceDTO usuario = usuarioService.findByUsernameAndSenha(authDTO.username(), hash);
 
         if (usuario == null) {
             LOG.info("usuario n encontrado ");
@@ -50,4 +51,5 @@ public class AuthResouce {
                 .build();
 
     }
+
 }

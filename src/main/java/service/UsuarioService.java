@@ -9,22 +9,18 @@ import DTO.UsuarioResponceDTO;
 @ApplicationScoped
 public interface UsuarioService {
 
-    List<UsuarioResponceDTO> getAll(int page , int size);
-
     UsuarioResponceDTO create(UsuarioDTO usuarioDTO);
 
     UsuarioResponceDTO update(Long id, UsuarioDTO usuarioDTO);
 
     void delete(Long id);
 
-    // recursos extras
+    List<UsuarioResponceDTO> getAll(int page , int size);
+
+    long count();
 
     UsuarioResponceDTO findById(long id);
 
     UsuarioResponceDTO findByUsernameAndSenha(String login, String senha);
-
-    UsuarioResponceDTO updateprivilege (String nameAdm , Long idUserUpdate);
-
-    long count();
 
 }

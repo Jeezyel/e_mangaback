@@ -4,6 +4,7 @@ package DTO;
 import model.Telefone;
 
 public record TelefoneResponceDTO(
+    
         long idTelefone,
         String codegoDeArea,
         String numero

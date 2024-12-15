@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public record UsuarioDTO(
+
         @NotBlank(message = "O nome deve ser informdo ")
         String nome,
 
@@ -17,13 +18,14 @@ public record UsuarioDTO(
 
         List<Long> telefone,
 
-        @NotNull(message = "O endereco deve ser informdo ")
         List<Long> endereco,
 
         @NotBlank (message = "O username deve ser informado ")
         String username,
 
         @NotBlank (message = "A senha deve ser informada ")
-        String senha
-        ) {
-}
+        String senha,
+
+        int idPerfil
+
+) {}

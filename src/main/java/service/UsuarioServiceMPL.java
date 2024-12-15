@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
 
 import java.util.ArrayList;
@@ -43,50 +44,47 @@ public class UsuarioServiceMPL implements UsuarioService{
     HashService hashService;
 
     @Override
-    public List<UsuarioResponceDTO> getAll(int page , int size) {
-        List<Usuario> list = usuarioRepository.findAll().page(page,size).list();
-        return list.stream().map(UsuarioResponceDTO::valueOf).toList();
-    }
-
-    @Override
+    @Transactional
     public UsuarioResponceDTO create(UsuarioDTO usuarioDTO) {
-        validar(usuarioDTO);
 
+        if (usuarioRepository.findByUserName(usuarioDTO.username()) != null) {
+            throw new ValidationException("O username informado já existe, informe outro username");
+        }
 
-        Usuario entity = new Usuario();
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(usuarioDTO.nome());
+        novoUsuario.setEmail(usuarioDTO.email());
+        novoUsuario.setTelefone(telefoneList(usuarioDTO.telefone()));
+        novoUsuario.setEndereco(enderecolist(usuarioDTO.endereco()));
+        novoUsuario.setUsername(usuarioDTO.username());
+        novoUsuario.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
+        novoUsuario.setPerfil(Perfil.valueOf(usuarioDTO.idPerfil()));
 
-        entity.setNome(usuarioDTO.nome());
-        entity.setEmail(usuarioDTO.email());
-        entity.setTelefone(telefoneList(usuarioDTO.telefone()));
-        entity.setEndereco(enderecolist(usuarioDTO.endereco()));
-        entity.setPerfil(Perfil.perfilSet("User"));
-        entity.setUsername(usuarioDTO.username());
-        entity.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
+        usuarioRepository.persist(novoUsuario);
 
-        usuarioRepository.persist(entity);
-
-        return UsuarioResponceDTO.valueOf(entity);
+        return UsuarioResponceDTO.valueOf(novoUsuario);
     }
 
     @Override
+    @Transactional
     public UsuarioResponceDTO update(Long id, UsuarioDTO usuarioDTO) {
-        validar(usuarioDTO);
 
-        Usuario entity = usuarioRepository.findById(id);
+        Usuario usuarioAtualizado = usuarioRepository.findById(id);
 
-        entity.setNome(usuarioDTO.nome());
-        entity.setEmail(usuarioDTO.email());
-        entity.setTelefone(telefoneList(usuarioDTO.telefone()));
-        entity.setEndereco(enderecolist(usuarioDTO.endereco()));
-        entity.setUsername(usuarioDTO.username());
-        entity.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
+        usuarioAtualizado.setNome(usuarioDTO.nome());
+        usuarioAtualizado.setEmail(usuarioDTO.email());
+        usuarioAtualizado.setTelefone(telefoneList(usuarioDTO.telefone()));
+        usuarioAtualizado.setEndereco(enderecolist(usuarioDTO.endereco()));
+        usuarioAtualizado.setUsername(usuarioDTO.username());
+        usuarioAtualizado.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
 
-        usuarioRepository.persist(entity);
+        usuarioRepository.persist(usuarioAtualizado);
 
-        return UsuarioResponceDTO.valueOf(entity);
+        return UsuarioResponceDTO.valueOf(usuarioAtualizado);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         usuarioRepository.deleteById(id);
     }
@@ -121,8 +119,8 @@ public class UsuarioServiceMPL implements UsuarioService{
 
     @Override
     public UsuarioResponceDTO findByUsernameAndSenha(String username, String senha) {
-    if (username == null || senha == null )
-        return null;
+        if (username == null || senha == null )
+            return null;
 
         // Use o repositório para realizar a busca
         Usuario usuario = usuarioRepository.findByUsernameAndSenha(username, senha);
@@ -130,21 +128,9 @@ public class UsuarioServiceMPL implements UsuarioService{
     }
 
     @Override
-    @Transactional
-    public UsuarioResponceDTO updateprivilege(String nameAdm, Long idUserUpdate) {
-        Usuario userAdm = usuarioRepository.findByUserName(nameAdm);
-        Usuario usuario = usuarioRepository.findById(idUserUpdate);
-
-        if (userAdm != null && usuario != null){
-            Log.info("ENTRO ONDE DEVERIA");
-            if (true)
-                usuario.setPerfil(Perfil.perfilSet("Admin"));
-
-        }
-
-        usuarioRepository.persist(usuario);
-
-        return UsuarioResponceDTO.valueOf(usuario);
+    public List<UsuarioResponceDTO> getAll(int page , int size) {
+        List<Usuario> list = usuarioRepository.findAll().page(page,size).list();
+        return list.stream().map(UsuarioResponceDTO::valueOf).toList();
     }
 
     @Override
@@ -152,11 +138,4 @@ public class UsuarioServiceMPL implements UsuarioService{
         return usuarioRepository.count();
     }
 
-    private void validar(UsuarioDTO usuarioDTO) throws ConstraintViolationException {
-        Set<ConstraintViolation<UsuarioDTO>> violations = validator.validate(usuarioDTO);
-        if (!violations.isEmpty())
-            throw new ConstraintViolationException(violations);
-
-
-    }
 }

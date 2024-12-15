@@ -7,6 +7,8 @@ import model.Perfil;
 import model.Usuario;
 
 import java.util.List;
+
+import DTO.UsuarioDTO;
 @ApplicationScoped
 public class JwtUtils {
 
@@ -27,22 +29,22 @@ public class JwtUtils {
         }
     }
 
-    public Usuario getUsuarioFromToken(String token) {
+    public Usuario getUsuarioFromToken(String token, UsuarioDTO usuarioDTO) {
         try {
             var jwtClaims = jwtParser.parse(token); // Parseia o token
 
             // Extrai os claims necessários
             String nome = jwtClaims.getClaim("nome");
             String email = jwtClaims.getClaim("email");
-            String perfil = jwtClaims.getClaim("perfil");
-
 
             // Popula o DTO
             Usuario usuario = new Usuario();
             usuario.setNome(nome);
             usuario.setEmail(email);
-            usuario.setPerfil(Perfil.perfilSet(perfil));
+            usuario.setPerfil(Perfil.valueOf(usuarioDTO.idPerfil()));
+        
             return usuario;
+        
         } catch (Exception e) {
             e.printStackTrace();
             return null; // Retorna null em caso de erro (pode lançar exceções ou usar Optional)

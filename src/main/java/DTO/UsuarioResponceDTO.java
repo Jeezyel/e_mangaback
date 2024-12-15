@@ -6,27 +6,17 @@ import model.Telefone;
 import model.Usuario;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public record UsuarioResponceDTO(
+
         long id,
-
         String nome,
-
-        String nomeImagem,
-
         String email,
-
         List<Telefone> telefone,
-
         List<Endereco> endereco,
-
-        Set<Perfil> perfil,
-        
         String username,
-
-        String senha
+        String senha,
+        Perfil perfil
         
         ) {
         public static UsuarioResponceDTO valueOf(Usuario usuario){
@@ -34,13 +24,13 @@ public record UsuarioResponceDTO(
                 return new UsuarioResponceDTO(
                         usuario.getId(),
                         usuario.getNome(),
-                        usuario.getNomeImagem(),
                         usuario.getEmail(),
                         usuario.getTelefone(),
                         usuario.getEndereco(),
-                        usuario.getPerfil(),
                         usuario.getUsername(),
-                        usuario.getSenha()
+                        usuario.getSenha(),
+                        usuario.getPerfil()
                 );
         }
+
 }

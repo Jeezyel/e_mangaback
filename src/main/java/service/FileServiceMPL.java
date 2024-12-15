@@ -1,6 +1,5 @@
 package service;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,8 +7,6 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-
-
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -41,21 +38,8 @@ public class FileServiceMPL implements FileService {
 
     @Override
     @Transactional
-    public void salvar(Long id, String nomeImagem, byte[] imagem) {
-        Usuario consulta = usuarioRepository.findById(id);
-
-        try {
-            String novoNomeImagem = salvarImagem(imagem, nomeImagem);
-            consulta.setNomeImagem(novoNomeImagem);
-            // excluir a imagem antiga (trabalho pra quem????)
-        } catch (IOException e) {
-            throw new ValidationException("imagem", e.toString());
-        }
-    }
-
-    @Override
-    @Transactional
     public void salvarManga(Long id, String nomeImagem, byte[] imagem) {
+        
         Manga consulta = mangaRepository.findById(id);
 
         try {

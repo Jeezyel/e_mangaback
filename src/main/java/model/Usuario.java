@@ -3,7 +3,6 @@ package model;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Usuario extends DefaultEntity{
@@ -11,30 +10,19 @@ public class Usuario extends DefaultEntity{
     private String nome;
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    private Set<Perfil> perfil;
+    @OneToMany
+    private List<Telefone> telefone;
 
-    private String senha;
+    @OneToMany
+    private List<Endereco> endereco;
 
     @Column(unique = true)
     private String username;
-    
-    @Column(name = "imagem")
-    private String nomeImagem;
 
-    @OneToMany
-    private List<Telefone> telefone;
-    
-    @OneToMany
-    private List<Endereco> endereco;
-    
-    public String getNomeImagem() {
-        return nomeImagem;
-    }
+    private String senha;
 
-    public void setNomeImagem(String nomeImagem) {
-        this.nomeImagem = nomeImagem;
-    }
+    @Enumerated(EnumType.STRING)
+    private Perfil perfil;
 
     public String getNome() {
         return nome;
@@ -68,14 +56,6 @@ public class Usuario extends DefaultEntity{
         this.endereco = endereco;
     }
 
-    public Set<Perfil> getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(Set<Perfil> perfil) {
-        this.perfil = perfil;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -91,4 +71,13 @@ public class Usuario extends DefaultEntity{
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
+    
 }

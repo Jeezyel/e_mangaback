@@ -139,17 +139,15 @@ INSERT INTO public.telefone(codegoDeArea, numero) VALUES
 ('71', '997123456');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-INSERT INTO public.usuario(
-	 email, imagem, nome, senha, username, perfil)
-	VALUES ( 'jeezyel@unitins.br', 'imagem.png', 'Jeezyel', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'jeezyel', '{ADMIN}');
+INSERT INTO public.usuario
+(nome, email, telefone, endereco, username, senha, perfil)
+VALUES 
+( 'Nicole', 'nicole@unitins.br', '', '', 'nicole', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'ADMIN');
 
-INSERT INTO public.usuario(
-	 email, imagem, nome, senha, username, perfil)
-	VALUES ( 'nicole@unitins.br', 'imagem.png', 'Nicole', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'nicole', '{ADMIN}');
-
-INSERT INTO public.usuario(
-	 email, imagem, nome, senha, username, perfil)
-	VALUES ( 'janio@unitins.br', 'imagem.png', 'Janio', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'janior', '{USER}');
+INSERT INTO public.usuario
+(nome, email, telefone, endereco, username, senha, perfil)
+VALUES 
+( 'Jeezyel', 'jeezyel@unitins.br', '', '', 'jeezyel', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'ADMIN');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
