@@ -20,4 +20,11 @@ public class MunicipioRepository implements PanacheRepository<Municipio> {
         return find("UPPER(nome) LIKE ?1 ", "%"+nome.toUpperCase()+"%").firstResult();
     }
 
+    public Municipio findByMunicipioAndEstado(String nome, String estado){
+        if (nome == null || estado == null) {
+            return null;
+        }
+        return find("municipio.nome = ?1 and municipio.estado.sigla = ?2", nome, estado).firstResult();
+    }
+
 }

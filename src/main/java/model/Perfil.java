@@ -9,7 +9,7 @@ import java.util.Set;
 public enum Perfil {
 
     ADMIN(1, "ADMIN"),
-    USER(2, "ADMIN");
+    USER(2, "USER");
 
     private final int id;
     private final String label;
@@ -34,7 +34,7 @@ public enum Perfil {
             if (perfil.getId().equals(id))
                 return perfil;
         }
-        throw new IllegalArgumentException("Id inválido:");
+        throw new IllegalArgumentException("Id inválido:" + id);
     }
 
 }

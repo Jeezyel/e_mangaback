@@ -9,7 +9,8 @@ public record EnderecoResponceDTO(
         String logradouro,
         String complemento,
         String bairro,
-        String nomeMunicipio
+        String nomeMunicipio,
+        String sigla
 ) {
 
     public static EnderecoResponceDTO valueOf(Endereco endereco){
@@ -20,7 +21,8 @@ public record EnderecoResponceDTO(
                 endereco.getLogradouro(),
                 endereco.getComplemento(),
                 endereco.getBairro(),
-                endereco.getMunicipio().getNome()
+                endereco.getMunicipio().getNome(),
+                endereco.getMunicipio().getEstado().getSigla()
         );
     }
 }

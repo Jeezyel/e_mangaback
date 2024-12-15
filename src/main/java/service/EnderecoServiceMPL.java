@@ -51,7 +51,7 @@ public class EnderecoServiceMPL implements EnderecoService{
         entity.setLogradouro(enderecoDTO.logradouro());
         entity.setComplemento(enderecoDTO.complemento());
         entity.setBairro(enderecoDTO.bairro());
-        entity.setMunicipio(municipioRepository.findById(enderecoDTO.idMunicipio()));
+        entity.setMunicipio(municipioRepository.findByName(enderecoDTO.nomeMunicipio()));
 
         enderecoRepository.persist(entity);
 
@@ -71,7 +71,7 @@ public class EnderecoServiceMPL implements EnderecoService{
         entity.setLogradouro(enderecoDTO.logradouro());
         entity.setComplemento(enderecoDTO.complemento());
         entity.setBairro(enderecoDTO.bairro());
-        entity.setMunicipio(municipioRepository.findById(enderecoDTO.idMunicipio()));
+        entity.setMunicipio(municipioRepository.findByName(enderecoDTO.nomeMunicipio()));
 
         enderecoRepository.persist(entity);
 
@@ -142,8 +142,6 @@ public class EnderecoServiceMPL implements EnderecoService{
         List<Endereco> list = enderecoRepository.findByListaCep(cep);
         return list.stream().map(EnderecoResponceDTO::valueOf).collect(Collectors.toList());
     }
-
-
 
     @Override
     public long count() {

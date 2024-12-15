@@ -15,8 +15,7 @@ public record UsuarioResponceDTO(
         List<Telefone> telefone,
         List<Endereco> endereco,
         String username,
-        String senha,
-        Perfil perfil
+        String perfil
         
         ) {
         public static UsuarioResponceDTO valueOf(Usuario usuario){
@@ -28,8 +27,7 @@ public record UsuarioResponceDTO(
                         usuario.getTelefone(),
                         usuario.getEndereco(),
                         usuario.getUsername(),
-                        usuario.getSenha(),
-                        usuario.getPerfil()
+                        usuario.getPerfil().getLabel()
                 );
         }
 

@@ -15,15 +15,20 @@ import java.util.List;
 import java.util.Set;
 
 import model.Endereco;
+import model.Municipio;
 import model.Perfil;
 import model.Telefone;
 import model.Usuario;
 import DTO.EditoraDTO;
+import DTO.EnderecoDTO;
+import DTO.TelefoneDTO;
 import DTO.UsuarioDTO;
 import DTO.UsuarioResponceDTO;
 import repository.EnderecoRepository;
+import repository.MunicipioRepository;
 import repository.TelefoneRepository;
 import repository.UsuarioRepository;
+import util.JwtUtils;
 
 @ApplicationScoped
 public class UsuarioServiceMPL implements UsuarioService{
@@ -38,6 +43,12 @@ public class UsuarioServiceMPL implements UsuarioService{
     EnderecoRepository enderecoRepository;
 
     @Inject
+    MunicipioRepository municipioRepository;
+
+    @Inject
+    JwtUtils jwtUtil;
+
+    @Inject
     Validator validator;
 
     @Inject
@@ -45,20 +56,56 @@ public class UsuarioServiceMPL implements UsuarioService{
 
     @Override
     @Transactional
-    public UsuarioResponceDTO create(UsuarioDTO usuarioDTO) {
+    public UsuarioResponceDTO create(UsuarioDTO usuarioDTO, String authToken) {
 
-        if (usuarioRepository.findByUserName(usuarioDTO.username()) != null) {
+        String authUsername = jwtUtil.extractUsername(authToken);
+        Usuario usuarioAdmin = usuarioRepository.findByUsername(authUsername);
+
+        if (usuarioDTO.perfil() != null && Perfil.ADMIN.name().equals(usuarioDTO.perfil())) {
+            if (usuarioAdmin == null || usuarioAdmin.getPerfil() != Perfil.ADMIN) {
+                throw new ValidationException("Somente administradores podem criar outros administradores.");
+            }
+        }
+
+        if (usuarioRepository.findByUsername(usuarioDTO.username()) != null) {
             throw new ValidationException("O username informado já existe, informe outro username");
         }
 
         Usuario novoUsuario = new Usuario();
         novoUsuario.setNome(usuarioDTO.nome());
         novoUsuario.setEmail(usuarioDTO.email());
-        novoUsuario.setTelefone(telefoneList(usuarioDTO.telefone()));
-        novoUsuario.setEndereco(enderecolist(usuarioDTO.endereco()));
         novoUsuario.setUsername(usuarioDTO.username());
         novoUsuario.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
-        novoUsuario.setPerfil(Perfil.valueOf(usuarioDTO.idPerfil()));
+        novoUsuario.setPerfil(Perfil.valueOf(usuarioDTO.perfil()));
+
+        // Definir o perfil
+        if (usuarioAdmin != null && usuarioAdmin.getPerfil() == Perfil.ADMIN && Perfil.ADMIN.name().equals(usuarioDTO.perfil())) {
+            novoUsuario.setPerfil(Perfil.ADMIN);
+        } else {
+            novoUsuario.setPerfil(Perfil.USER);
+        }
+
+        // Persistir os telefones, se houver
+        if (usuarioDTO.telefone() != null && !usuarioDTO.telefone().isEmpty()) {
+            List<Telefone> telefones = usuarioDTO.telefone();
+            telefones.forEach(telefone -> {
+                if (telefone.getId() == 0) { // Novo telefone
+                    telefoneRepository.persist(telefone);
+                }
+            });
+            novoUsuario.setTelefone(telefones);
+        }
+
+        // Persistir os endereços, se houver
+        if (usuarioDTO.endereco() != null && !usuarioDTO.endereco().isEmpty()) {
+            List<Endereco> enderecos = usuarioDTO.endereco();
+            enderecos.forEach(endereco -> {
+                if (endereco.getId() == 0) { // Novo endereço
+                    enderecoRepository.persist(endereco);
+                }
+            });
+            novoUsuario.setEndereco(enderecos);
+        }
 
         usuarioRepository.persist(novoUsuario);
 
@@ -67,16 +114,51 @@ public class UsuarioServiceMPL implements UsuarioService{
 
     @Override
     @Transactional
-    public UsuarioResponceDTO update(Long id, UsuarioDTO usuarioDTO) {
+    public UsuarioResponceDTO update(Long id, UsuarioDTO usuarioDTO, String authToken) {
 
+        String authUsername = jwtUtil.extractUsername(authToken);
+        Usuario usuarioAdmin = usuarioRepository.findByUsername(authUsername);
         Usuario usuarioAtualizado = usuarioRepository.findById(id);
+
+        if (usuarioAtualizado == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+
+        // Verificar se o perfil está sendo alterado para ADMIN
+        if (usuarioDTO.perfil() != null && Perfil.ADMIN.name().equals(usuarioDTO.perfil())) {
+            if (usuarioAdmin == null || usuarioAdmin.getPerfil() != Perfil.ADMIN) {
+                throw new ValidationException("Somente administradores podem atualizar o perfil para ADMIN.");
+            }
+            usuarioAtualizado.setPerfil(Perfil.ADMIN);
+        }
 
         usuarioAtualizado.setNome(usuarioDTO.nome());
         usuarioAtualizado.setEmail(usuarioDTO.email());
-        usuarioAtualizado.setTelefone(telefoneList(usuarioDTO.telefone()));
-        usuarioAtualizado.setEndereco(enderecolist(usuarioDTO.endereco()));
         usuarioAtualizado.setUsername(usuarioDTO.username());
         usuarioAtualizado.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
+        usuarioAtualizado.setPerfil(Perfil.valueOf(usuarioDTO.perfil())); 
+
+        // Atualizar telefones
+        if (usuarioDTO.telefone() != null && !usuarioDTO.telefone().isEmpty()) {
+            List<Telefone> telefones = usuarioDTO.telefone();
+            telefones.forEach(telefone -> {
+                if (telefone.getId() == 0) { // Novo telefone
+                    telefoneRepository.persist(telefone);
+                }
+            });
+            usuarioAtualizado.setTelefone(telefones);
+        }
+
+        // Atualizar endereços
+        if (usuarioDTO.endereco() != null && !usuarioDTO.endereco().isEmpty()) {
+            List<Endereco> enderecos = usuarioDTO.endereco();
+            enderecos.forEach(endereco -> {
+                if (endereco.getId() == 0) { // Novo endereço
+                    enderecoRepository.persist(endereco);
+                }
+            });
+            usuarioAtualizado.setEndereco(enderecos);
+        }
 
         usuarioRepository.persist(usuarioAtualizado);
 
@@ -95,26 +177,71 @@ public class UsuarioServiceMPL implements UsuarioService{
         return UsuarioResponceDTO.valueOf(usuarioRepository.findById(id));
     }
 
-    private List<Telefone> telefoneList(List<Long> idstelefones){
-
-        List<Telefone> listTelefone = new ArrayList<>();
-        if (idstelefones != null) {
-            for (Long id : idstelefones) {
-                listTelefone.add(telefoneRepository.findById(id));
-            }            
+    public UsuarioResponceDTO addEndereco(Long id, Endereco endereco) {
+        Usuario usuario = usuarioRepository.findById(id);
+        if (usuario == null) {
+            throw new IllegalArgumentException("User not found");
         }
-        return listTelefone;
+        usuario.getEndereco().add(endereco);
+        usuarioRepository.persist(usuario);
+        
+        return UsuarioResponceDTO.valueOf(usuario);
     }
 
-    private List<Endereco> enderecolist(List<Long> idsEnderecos){
-
-        List<Endereco> listEndereco = new ArrayList<>();
-        if (idsEnderecos != null){
-            for (Long id : idsEnderecos) {
-                listEndereco.add(enderecoRepository.findById(id));
-            }    
+    public UsuarioResponceDTO addTelefone(Long id, Telefone telefone) {
+        Usuario usuario = usuarioRepository.findById(id);
+        if (usuario == null) {
+            throw new IllegalArgumentException("User not found");
         }
-        return listEndereco;
+        usuario.getTelefone().add(telefone);
+        usuarioRepository.persist(usuario);
+
+        return UsuarioResponceDTO.valueOf(usuario);
+    }
+
+    public List<Endereco> getEnderecos(Long id) {
+        Usuario usuario = usuarioRepository.findById(id);
+        if (usuario == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+        return usuario.getEndereco();
+    }
+
+    public List<Telefone> getTelefones(Long id) {
+        Usuario usuario = usuarioRepository.findById(id);
+        if (usuario == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+        return usuario.getTelefone();
+    }
+
+    public Endereco convertEndereco(EnderecoDTO enderecoDTO) {
+        
+        Municipio municipio = municipioRepository.findByMunicipioAndEstado(
+                enderecoDTO.nomeMunicipio(), enderecoDTO.sigla()
+        );
+
+        if (municipio == null) {
+            throw new IllegalArgumentException(
+                    "Município não encontrado: " + enderecoDTO.nomeMunicipio() + " - " + enderecoDTO.sigla()
+            );
+        }
+
+        Endereco endereco = new Endereco();
+        endereco.setCep(enderecoDTO.cep());
+        endereco.setLogradouro(enderecoDTO.logradouro());
+        endereco.setComplemento(enderecoDTO.complemento());
+        endereco.setBairro(enderecoDTO.bairro());
+        endereco.setMunicipio(municipio);
+
+        return endereco;
+    }
+
+    public Telefone convertTelefone(TelefoneDTO telefoneDTO) {
+        Telefone telefone = new Telefone();
+        telefone.setCodegoDeArea(telefoneDTO.codegoDeArea());
+        telefone.setNumero(telefoneDTO.numero());
+        return telefone;
     }
 
     @Override
