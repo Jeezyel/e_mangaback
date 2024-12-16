@@ -139,15 +139,16 @@ INSERT INTO public.telefone(codegoDeArea, numero) VALUES
 ('71', '997123456');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-INSERT INTO public.usuario
-(nome, email, telefone, endereco, username, senha, perfil)
-VALUES 
-( 'Nicole', 'nicole@unitins.br', '', '', 'nicole', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'ADMIN');
 
 INSERT INTO public.usuario
-(nome, email, telefone, endereco, username, senha, perfil)
+(email, nome, perfil, senha, username)
 VALUES 
-( 'Jeezyel', 'jeezyel@unitins.br', '', '', 'jeezyel', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'ADMIN');
+( 'nicole@unitins.br', 'Nicole', 'ADMIN', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 'nicole');
+
+INSERT INTO public.usuario
+(email, nome, perfil, senha, username)
+VALUES 
+( 'jeezyel@unitins.br', 'Jeezyel', 'ADMIN', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 'jeezyel');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
