@@ -13,6 +13,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.ClassificacaoIndicativa;
+import model.FormaDePagamento;
+import model.Perfil;
+
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import service.FileService;
@@ -121,8 +124,8 @@ public class PedidoResouce {
     }
 
     @GET
-    @Path("/{iduser}")
-    public Response findByUser(@PathParam("iduser") Long iduser) {
+    @Path("/{idUser}")
+    public Response findByUser(@PathParam("idUser") Long iduser) {
         try {
             PedidoResponceDTO pedido = pedidoService.findByUser(iduser);
             return Response.ok(pedido).build();
@@ -130,4 +133,11 @@ public class PedidoResouce {
             return Response.status(Response.Status.NOT_FOUND).entity("Mangá não encontrado").build();
         }
     }
+
+    @GET
+    @Path("/formaDePagamento")
+    public Response getFormaDePagamento() {
+        return Response.ok(FormaDePagamento.values()).build();
+    }
+
 }
