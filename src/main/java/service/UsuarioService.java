@@ -27,6 +27,8 @@ public interface UsuarioService {
 
     UsuarioResponceDTO findById(long id);
 
+    UsuarioResponceDTO userLogin(String userName);
+
     UsuarioResponceDTO findByUsernameAndSenha(String login, String senha);
 
     UsuarioResponceDTO addEndereco(Long id, Endereco endereco);

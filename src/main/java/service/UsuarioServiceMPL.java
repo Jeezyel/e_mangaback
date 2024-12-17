@@ -245,6 +245,11 @@ public class UsuarioServiceMPL implements UsuarioService{
     }
 
     @Override
+    public UsuarioResponceDTO userLogin(String userName) {
+        return UsuarioResponceDTO.valueOf(usuarioRepository.findByUsername(userName));
+    }
+
+    @Override
     public UsuarioResponceDTO findByUsernameAndSenha(String username, String senha) {
         if (username == null || senha == null )
             return null;
