@@ -150,6 +150,11 @@ INSERT INTO public.usuario
 VALUES 
 ( 'jeezyel@unitins.br', 'Jeezyel', 'ADMIN', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 'jeezyel');
 
+INSERT INTO public.usuario
+(email, nome, perfil, senha, username)
+VALUES 
+( 'usuario@unitins.br', 'Usuario', 'USER', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 'usuario');
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 INSERT INTO public.editora(nome, cnpj, telefone) VALUES
