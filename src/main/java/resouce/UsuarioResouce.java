@@ -101,6 +101,17 @@ public class UsuarioResouce {
         usuarioService.delete(id);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
+
+    @GET
+    @Path("/userLogin")
+    public  Response userLogin (){
+        LOG.info("coletando usuario");
+
+        String user = jwt.getSubject();
+
+        LOG.info("USUARIO: " + user);
+        return Response.ok(usuarioService.userLogin(user)).build();
+    }
     
     @POST
     @Path("/endereco/{id}")
