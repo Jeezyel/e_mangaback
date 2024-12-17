@@ -15,6 +15,7 @@ import jakarta.ws.rs.core.Response;
 import model.ClassificacaoIndicativa;
 import model.FormaDePagamento;
 import model.Perfil;
+import model.Status;
 
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -138,6 +139,12 @@ public class PedidoResouce {
     @Path("/formaDePagamento")
     public Response getFormaDePagamento() {
         return Response.ok(FormaDePagamento.values()).build();
+    }
+
+    @GET
+    @Path("/status")
+    public Response getStatus() {
+        return Response.ok(Status.values()).build();
     }
 
 }
