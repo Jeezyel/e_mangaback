@@ -14,5 +14,14 @@ implementar o pedido e salvar o pedido
 
 arrumar os deleteById
 
-    
+arrumar a autentucação
+ver o pq n deixa user name repetido
+criar outro crud pra ADMIN
 
+
+O POST de Usuário  deve ser sempre cadastrado com perfil de usuário
+O POST de Usuário Admin deve ser sempre cadastrado com perfil de admin
+O PUT de Usuário  não pode mudar para admin
+O PUT de Usuário Admin  não pode mudar para usuário
+O DELETE de usuário o pedido tem que estar pago e com pedido entregue
+O DELETE de Usuário Admin pode seguir o fluxo normal
