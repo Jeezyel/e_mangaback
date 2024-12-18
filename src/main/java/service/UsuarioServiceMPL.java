@@ -1,5 +1,6 @@
 package service;
 
+import DTO.*;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -19,11 +20,6 @@ import model.Municipio;
 import model.Perfil;
 import model.Telefone;
 import model.Usuario;
-import DTO.EditoraDTO;
-import DTO.EnderecoDTO;
-import DTO.TelefoneDTO;
-import DTO.UsuarioDTO;
-import DTO.UsuarioResponceDTO;
 import repository.EnderecoRepository;
 import repository.MunicipioRepository;
 import repository.TelefoneRepository;
@@ -43,6 +39,12 @@ public class UsuarioServiceMPL implements UsuarioService{
     EnderecoRepository enderecoRepository;
 
     @Inject
+    TelefoneService telefoneService;
+
+    @Inject
+    EnderecoService enderecoService;
+
+    @Inject
     MunicipioRepository municipioRepository;
 
     @Inject
@@ -56,16 +58,8 @@ public class UsuarioServiceMPL implements UsuarioService{
 
     @Override
     @Transactional
-    public UsuarioResponceDTO create(UsuarioDTO usuarioDTO, String authToken) {
+    public UsuarioResponceDTO create(UsuarioDTO usuarioDTO) {
 
-        String authUsername = jwtUtil.extractUsername(authToken);
-        Usuario usuarioAdmin = usuarioRepository.findByUsername(authUsername);
-
-        if (usuarioDTO.perfil() != null && Perfil.ADMIN.name().equals(usuarioDTO.perfil())) {
-            if (usuarioAdmin == null || usuarioAdmin.getPerfil() != Perfil.ADMIN) {
-                throw new ValidationException("Somente administradores podem criar outros administradores.");
-            }
-        }
 
         if (usuarioRepository.findByUsername(usuarioDTO.username()) != null) {
             throw new ValidationException("O username informado já existe, informe outro username");
@@ -78,12 +72,50 @@ public class UsuarioServiceMPL implements UsuarioService{
         novoUsuario.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
         novoUsuario.setPerfil(Perfil.valueOf(usuarioDTO.perfil()));
 
-        // Definir o perfil
-        if (usuarioAdmin != null && usuarioAdmin.getPerfil() == Perfil.ADMIN && Perfil.ADMIN.name().equals(usuarioDTO.perfil())) {
-            novoUsuario.setPerfil(Perfil.ADMIN);
-        } else {
-            novoUsuario.setPerfil(Perfil.USER);
+
+        // Persistir os telefones, se houver
+        if (usuarioDTO.telefone() != null && !usuarioDTO.telefone().isEmpty()) {
+            List<Telefone> telefones = usuarioDTO.telefone();
+            telefones.forEach(telefone -> {
+                if (telefone.getId() == 0) { // Novo telefone
+                    telefoneRepository.persist(telefone);
+                }
+            });
+            novoUsuario.setTelefone(telefones);
         }
+
+        // Persistir os endereços, se houver
+        if (usuarioDTO.endereco() != null && !usuarioDTO.endereco().isEmpty()) {
+            List<Endereco> enderecos = usuarioDTO.endereco();
+            enderecos.forEach(endereco -> {
+                if (endereco.getId() == 0) { // Novo endereço
+                    enderecoRepository.persist(endereco);
+                }
+            });
+            novoUsuario.setEndereco(enderecos);
+        }
+
+        usuarioRepository.persist(novoUsuario);
+
+        return UsuarioResponceDTO.valueOf(novoUsuario);
+    }
+
+    @Override
+    @Transactional
+    public UsuarioResponceDTO create2(UsuarioDTO usuarioDTO) {
+
+
+        if (usuarioRepository.findByUsername(usuarioDTO.username()) != null) {
+            throw new ValidationException("O username informado já existe, informe outro username");
+        }
+
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(usuarioDTO.nome());
+        novoUsuario.setEmail(usuarioDTO.email());
+        novoUsuario.setUsername(usuarioDTO.username());
+        novoUsuario.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
+        novoUsuario.setPerfil(Perfil.valueOf(2));
+
 
         // Persistir os telefones, se houver
         if (usuarioDTO.telefone() != null && !usuarioDTO.telefone().isEmpty()) {
@@ -136,7 +168,6 @@ public class UsuarioServiceMPL implements UsuarioService{
         usuarioAtualizado.setEmail(usuarioDTO.email());
         usuarioAtualizado.setUsername(usuarioDTO.username());
         usuarioAtualizado.setSenha(hashService.getHashSenha(usuarioDTO.senha()));
-        usuarioAtualizado.setPerfil(Perfil.valueOf(usuarioDTO.perfil())); 
 
         // Atualizar telefones
         if (usuarioDTO.telefone() != null && !usuarioDTO.telefone().isEmpty()) {
@@ -177,23 +208,30 @@ public class UsuarioServiceMPL implements UsuarioService{
         return UsuarioResponceDTO.valueOf(usuarioRepository.findById(id));
     }
 
-    public UsuarioResponceDTO addEndereco(Long id, Endereco endereco) {
+    public UsuarioResponceDTO addEndereco(Long id, EnderecoDTO enderecoDTO) {
         Usuario usuario = usuarioRepository.findById(id);
         if (usuario == null) {
             throw new IllegalArgumentException("User not found");
         }
-        usuario.getEndereco().add(endereco);
+        usuario.getEndereco().add(enderecoRepository.findByCep(enderecoDTO.cep()));
         usuarioRepository.persist(usuario);
         
         return UsuarioResponceDTO.valueOf(usuario);
     }
 
-    public UsuarioResponceDTO addTelefone(Long id, Telefone telefone) {
+    public UsuarioResponceDTO addTelefone(Long id, TelefoneDTO telefoneDTO) {
         Usuario usuario = usuarioRepository.findById(id);
         if (usuario == null) {
             throw new IllegalArgumentException("User not found");
         }
-        usuario.getTelefone().add(telefone);
+        TelefoneResponceDTO telefoneResponceDTO = telefoneService.create(telefoneDTO);
+
+        List<Telefone> telefones = usuario.getTelefone();
+
+        telefones.add(telefoneRepository.findById(telefoneResponceDTO.idTelefone()));
+
+
+        usuario.setTelefone(telefones);
         usuarioRepository.persist(usuario);
 
         return UsuarioResponceDTO.valueOf(usuario);

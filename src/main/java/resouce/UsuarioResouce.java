@@ -1,6 +1,8 @@
 package resouce;
 
 
+import DTO.EnderecoDTO;
+import DTO.TelefoneDTO;
 import DTO.UsuarioDTO;
 import DTO.UsuarioResponceDTO;
 import aplication.Result;
@@ -44,9 +46,6 @@ public class UsuarioResouce {
     FileService fileService;
 
     @Inject
-    JwtUtils jwtUtils;
-
-    @Inject
     JsonWebToken jwt;
 
     private static final Logger LOG = Logger.getLogger(UsuarioResouce.class);
@@ -54,11 +53,12 @@ public class UsuarioResouce {
     @POST
     @Path("/insert")
     @Transactional
-    public Response insert(UsuarioDTO usuarioDTO, @HeaderParam("Authorization") String authToken) {
+    @RolesAllowed({"ADMIN" , "USER"})
+    public Response insert(UsuarioDTO usuarioDTO) {
             
         LOG.info("inserindo um usuario.");
             
-        String username = jwtUtils.extractUsername(authToken);
+        String username = jwt.getSubject();
         Usuario currentUser = usuarioRepository.findByUsername(username);
         
         // Validate admin privileges for admin creation
@@ -69,7 +69,26 @@ public class UsuarioResouce {
         }
 
         try {
-            UsuarioResponceDTO usuario = usuarioService.create(usuarioDTO, authToken);
+            UsuarioResponceDTO usuario = usuarioService.create(usuarioDTO);
+            return Response.ok(usuario).build();
+        } catch (ConstraintViolationException e) {
+            Result result = new Result(e.getConstraintViolations());
+            LOG.debug("inserir de contato.");
+            return Response.status(Response.Status.NOT_FOUND).entity(result).build();
+        }
+
+    }
+
+    @POST
+    @Path("/insertnologin")
+    @Transactional
+    public Response insertNoLogin(UsuarioDTO usuarioDTO) {
+
+        LOG.info("inserindo um usuario.");
+
+
+        try {
+            UsuarioResponceDTO usuario = usuarioService.create2(usuarioDTO);
             return Response.ok(usuario).build();
         } catch (ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
@@ -82,6 +101,7 @@ public class UsuarioResouce {
     @PUT
     @Path("/update/{id}")
     @Transactional
+    @RolesAllowed({"ADMIN" , "USER"})
     public Response update(@PathParam("id") Long id, UsuarioDTO usuarioDTO, @HeaderParam("Authorization") String authToken) {
         LOG.info("Atualiza um usuario.");
         try {
@@ -104,6 +124,7 @@ public class UsuarioResouce {
 
     @GET
     @Path("/userLogin")
+    @RolesAllowed({"ADMIN" , "USER"})
     public  Response userLogin (){
         LOG.info("coletando usuario");
 
@@ -116,10 +137,10 @@ public class UsuarioResouce {
     @POST
     @Path("/endereco/{id}")
     @Transactional
-    public Response addEndereco(@PathParam("idEndereco") Long id, Endereco endereco) {
+    public Response addEndereco(@PathParam("id") Long id, EnderecoDTO enderecoDTO) {
         LOG.info("Adding address to user.");
         try {
-            UsuarioResponceDTO updateUser = usuarioService.addEndereco(id, endereco);
+            UsuarioResponceDTO updateUser = usuarioService.addEndereco(id, enderecoDTO);
             return Response.ok(updateUser).build();
         } catch (Exception e) {
             LOG.error("Error adding address: ", e);
@@ -130,10 +151,10 @@ public class UsuarioResouce {
     @POST
     @Path("/telefone/{id}")
     @Transactional
-    public Response addTelefone(@PathParam("idTelefone") Long id, Telefone telefone) {
+    public Response addTelefone(@PathParam("id") Long id, TelefoneDTO telefoneDTO) {
         LOG.info("Adding address to user.");
         try {
-            UsuarioResponceDTO updateUser = usuarioService.addTelefone(id, telefone);
+            UsuarioResponceDTO updateUser = usuarioService.addTelefone(id, telefoneDTO);
             return Response.ok(updateUser).build();
         } catch (Exception e) {
             LOG.error("Error adding address: ", e);

@@ -15,7 +15,9 @@ import DTO.UsuarioResponceDTO;
 @ApplicationScoped
 public interface UsuarioService {
 
-    UsuarioResponceDTO create(UsuarioDTO usuarioDTO, String authToken);
+    UsuarioResponceDTO create(UsuarioDTO usuarioDTO);
+
+    UsuarioResponceDTO create2(UsuarioDTO usuarioDTO);
 
     UsuarioResponceDTO update(Long id, UsuarioDTO usuarioDTO, String authToken);
 
@@ -31,9 +33,9 @@ public interface UsuarioService {
 
     UsuarioResponceDTO findByUsernameAndSenha(String login, String senha);
 
-    UsuarioResponceDTO addEndereco(Long id, Endereco endereco);
+    UsuarioResponceDTO addEndereco(Long id, EnderecoDTO enderecoDTO);
 
-    UsuarioResponceDTO addTelefone(Long id, Telefone telefone);
+    UsuarioResponceDTO addTelefone(Long id, TelefoneDTO telefoneDTO);
 
     Endereco convertEndereco(EnderecoDTO enderecoDTO);
 
