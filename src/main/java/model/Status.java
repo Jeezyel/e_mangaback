@@ -8,10 +8,11 @@ import java.util.Set;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Status {
-    PEDIDO_PAGO(1 ,"Pedido Pago"),
-    EM_PREPARACAO(2 ,"Em Preparação"),
-    EM_ROTA_DE_ENTREGA( 3,"Em Rota de Entrega"),
-    ENTREGUE(4 ,"Entregue");
+    ESPERANDO_PAGAMENTO(1 ,"Esperando pagamento"),
+    PEDIDO_PAGO(2 ,"Pedido Pago"),
+    EM_PREPARACAO(3 ,"Em Preparação"),
+    EM_ROTA_DE_ENTREGA( 4,"Em Rota de Entrega"),
+    ENTREGUE(5 ,"Entregue");
 
     private int id;
     private String label;
@@ -40,8 +41,12 @@ public enum Status {
     }
 
     public static Set<Status> statusSet (String status){
-        if (status.equals("PEDIDO_PAGO") )
+        if (status.equals("ESPERANDO_PAGAMENTO")){
+            return Collections.singleton(Status.ESPERANDO_PAGAMENTO);
+        }
+        else if (status.equals("PEDIDO_PAGO") ) {
             return Collections.singleton(Status.PEDIDO_PAGO);
+        }
         else if (status.equals("EM_PREPARACAO")) {
             return Collections.singleton(Status.EM_PREPARACAO);
         }

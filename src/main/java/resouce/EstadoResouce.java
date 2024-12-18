@@ -19,7 +19,7 @@ import service.EstadoService;
 import java.util.List;
 
 @Path("/estados")
-//@RolesAllowed("admin")
+//@RolesAllowed({"ADMIN","USER"})
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class EstadoResouce {
@@ -60,9 +60,7 @@ public class EstadoResouce {
     }
 
     @PUT
-    @Path("/update/{id}")/*
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)*/
+    @Path("/update/{id}")
     @Transactional
     public Response update(@PathParam("id") Long id, EstadoDTO estadoDTO) {
         LOG.info("Atualiza um estado.");
