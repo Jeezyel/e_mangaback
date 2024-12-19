@@ -8,7 +8,7 @@ import java.util.Set;
 
 public record PedidoDTO(
         @NotNull(message = "o Id do usuario deve ser informando")
-        Long usuario,
+        Long idUsuario,
 
         @NotNull(message = "o Id dos mangar deve ser informando")
         Set<Long>produto,

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +20,7 @@ public class Pedido  extends DefaultEntity {
             joinColumns = @JoinColumn(name = "pedido_id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id")
     ) // Define a tabela de ligação para o relacionamento muitos-para-muitos
-    private Set<Manga> produto;
+    private List<Manga> produto;
 
     @Column(nullable = false, precision = 10, scale = 2) // Define uma coluna obrigatória com precisão para valores monetários
     private BigDecimal valortotal;
@@ -46,11 +47,11 @@ public class Pedido  extends DefaultEntity {
         this.usuario = usuario;
     }
 
-    public Set<Manga> getProduto() {
+    public List<Manga> getProduto() {
         return produto;
     }
 
-    public void setProduto(Set<Manga> produto) {
+    public void setProduto(List<Manga> produto) {
         this.produto = produto;
     }
 

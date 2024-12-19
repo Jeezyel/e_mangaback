@@ -18,4 +18,12 @@ public class PedidoRepository implements PanacheRepository<Pedido> {
         return find("UPPER(usuario) LIKE ?1 ", usuario).firstResult();
     }
 
+    public List<Pedido> history(Long usuarioId) {
+        if (usuarioId == null) {
+            return null; // Ou você pode lançar uma exceção para indicar um ID inválido
+        }
+
+        return find("SELECT p FROM Pedido p WHERE p.usuario.id = ?1", usuarioId).list();
+    }
+
 }

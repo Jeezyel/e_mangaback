@@ -43,9 +43,6 @@ public class UsuarioResouce {
     UsuarioRepository usuarioRepository;
 
     @Inject
-    FileService fileService;
-
-    @Inject
     JsonWebToken jwt;
 
     private static final Logger LOG = Logger.getLogger(UsuarioResouce.class);

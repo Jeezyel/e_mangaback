@@ -1,26 +1,19 @@
 package resouce;
 
-import DTO.MangaDTO;
-import DTO.MangaResponceDTO;
-import DTO.PedidoDTO;
-import DTO.PedidoResponceDTO;
+import DTO.*;
 import aplication.Result;
-import form.ConsultaImageForm;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import model.ClassificacaoIndicativa;
 import model.FormaDePagamento;
-import model.Perfil;
 import model.Status;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
-import service.FileService;
-import service.MangaService;
 import service.PedidoService;
 
 @Path("/pedido")
@@ -34,7 +27,7 @@ public class PedidoResouce {
     PedidoService pedidoService;
 
     @Inject
-    FileService fileService;
+    JsonWebToken jwt;
 
     @GET
     @Path("/")
@@ -44,24 +37,24 @@ public class PedidoResouce {
     }
 
     @POST
-    @Transactional
     @Path("/insert")
-    public Response insert(PedidoDTO pedidoDTO) {
-        LOG.info("Inserindo um novo mangá.");
+    @Transactional
+    public Response insert(UsuarioPedidoJuncaoDTO usuarioPedidoJuncaoDTO) {
+        LOG.info("Inserindo um novo pedido.");
         try {
-            PedidoResponceDTO pedido = pedidoService.create(pedidoDTO);
+            UsuarioPedidoJuncaoResponceDTO pedido = pedidoService.create(usuarioPedidoJuncaoDTO);
             return Response.status(Response.Status.CREATED).entity(pedido).build();
         } catch (ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
             return Response.status(Response.Status.BAD_REQUEST).entity(result).build();
-        } catch (RuntimeException e) {
+        } /*catch (RuntimeException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Erro ao criar o mangá: " + e.getMessage())
+                    .entity("Erro ao criar o pedido: " + e.getMessage())
                     .build();
-        }
+        }*/
     }
 
-    @PUT
+    /*@PUT
     @Path("/update/{id}")
     @Transactional
     public Response update(@PathParam("id") Long id, PedidoDTO pedidoDTO) {
@@ -79,8 +72,8 @@ public class PedidoResouce {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                            .entity(e.getMessage())
                            .build();
-        }        
-    }
+        }
+    }*/
 
     @PUT
     @Path("/updatestatus/{id}{status}")
@@ -133,6 +126,14 @@ public class PedidoResouce {
         } catch (RuntimeException e) {
             return Response.status(Response.Status.NOT_FOUND).entity("Mangá não encontrado").build();
         }
+    }
+
+    @GET
+    @Path("/history")
+    @RolesAllowed("USER")
+    public Response history (){
+        String userName = jwt.getSubject();
+        return Response.ok(pedidoService.History(userName)).build();
     }
 
     @GET

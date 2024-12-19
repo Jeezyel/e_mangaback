@@ -23,7 +23,7 @@ public class Manga extends DefaultEntity {
     @JoinColumn(name = "idEditora", nullable = false) // Relacionamento com Editora
     private Editora editora;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "manga_genero", 
         joinColumns = @JoinColumn(name = "idManga"), 
